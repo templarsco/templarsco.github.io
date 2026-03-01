@@ -1,0 +1,1732 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" href="favicon.svg" type="image/svg+xml" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Documentation - Lightweight API</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://code.iconify.design/iconify-icon/1.0.7/iconify-icon.min.js"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap"
+      rel="stylesheet"
+    />
+
+    <script>
+      tailwind.config = {
+        theme: {
+          extend: {
+            colors: {
+              background: "#0A0A0A",
+              surface: "#111111",
+              accent: "#22C55E",
+              border: "rgba(255,255,255,0.05)",
+              "sh-kw": "#f97583",
+              "sh-str": "#79b8ff",
+              "sh-num": "#56d4dd",
+              "sh-func": "#b392f0",
+              "sh-attr": "#85e89d",
+              "sh-comment": "#6a737d",
+            },
+            fontFamily: {
+              sans: ["Inter", "sans-serif"],
+              mono: ["JetBrains Mono", "monospace"],
+            },
+          },
+        },
+      };
+    </script>
+    <style>
+      body {
+        background-color: theme("colors.background");
+        color: #ffffff;
+        font-family: theme("fontFamily.sans");
+      }
+
+      .code-block {
+        background-color: theme("colors.surface");
+        border: 1px solid theme("colors.border");
+        border-radius: 0.5rem;
+        position: relative;
+        overflow: hidden;
+        margin: 1rem 0;
+      }
+
+      .code-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 0.5rem 1rem;
+        background-color: rgba(255, 255, 255, 0.02);
+        border-bottom: 1px solid theme("colors.border");
+        font-family: theme("fontFamily.mono");
+        font-size: 0.75rem;
+        color: #888;
+      }
+
+      .code-content {
+        padding: 1rem;
+        overflow-x: auto;
+        font-family: theme("fontFamily.mono");
+        font-size: 0.875rem;
+        line-height: 1.5;
+      }
+
+      .token.keyword {
+        color: theme("colors.sh-kw");
+      }
+      .token.string {
+        color: theme("colors.sh-str");
+      }
+      .token.number {
+        color: theme("colors.sh-num");
+      }
+      .token.function {
+        color: theme("colors.sh-func");
+      }
+      .token.attribute {
+        color: theme("colors.sh-attr");
+      }
+      .token.comment {
+        color: theme("colors.sh-comment");
+        font-style: italic;
+      }
+
+      .copy-btn {
+        background: transparent;
+        border: 1px solid theme("colors.border");
+        color: #888;
+        padding: 0.25rem 0.5rem;
+        border-radius: 0.25rem;
+        cursor: pointer;
+        transition: all 0.2s;
+        display: flex;
+        align-items: center;
+        gap: 0.25rem;
+      }
+
+      .copy-btn:hover {
+        color: #fff;
+        background: rgba(255, 255, 255, 0.05);
+      }
+
+      .sidebar-link {
+        display: block;
+        padding: 0.5rem 1rem;
+        color: #888;
+        border-left: 2px solid transparent;
+        transition: all 0.2s;
+        font-size: 0.875rem;
+        text-decoration: none;
+      }
+
+      .sidebar-link:hover {
+        color: #fff;
+        background-color: rgba(255, 255, 255, 0.02);
+      }
+
+      .sidebar-link.active {
+        color: theme("colors.accent");
+        border-left-color: theme("colors.accent");
+        background-color: rgba(34, 197, 94, 0.05);
+      }
+
+      .prose h1,
+      .prose h2,
+      .prose h3 {
+        color: #fff;
+        font-weight: 600;
+        margin-top: 2.5rem;
+        margin-bottom: 1rem;
+      }
+
+      .prose h1 {
+        font-size: 2.25rem;
+        margin-top: 1rem;
+      }
+      .prose h2 {
+        font-size: 1.5rem;
+        border-bottom: 1px solid theme("colors.border");
+        padding-bottom: 0.5rem;
+      }
+      .prose h3 {
+        font-size: 1.25rem;
+      }
+
+      .prose p {
+        margin-bottom: 1rem;
+        color: #a1a1aa;
+        line-height: 1.6;
+      }
+      .prose ul,
+      .prose ol {
+        margin-bottom: 1rem;
+        padding-left: 1.5rem;
+        color: #a1a1aa;
+      }
+      .prose ul {
+        list-style-type: disc;
+      }
+      .prose ol {
+        list-style-type: decimal;
+      }
+      .prose li {
+        margin-bottom: 0.5rem;
+      }
+      .prose a {
+        color: theme("colors.accent");
+        text-decoration: none;
+        transition: opacity 0.2s;
+      }
+      .prose a:hover {
+        opacity: 0.8;
+      }
+
+      .prose code:not(pre code) {
+        background-color: theme("colors.surface");
+        padding: 0.2rem 0.4rem;
+        border-radius: 0.25rem;
+        border: 1px solid theme("colors.border");
+        font-family: theme("fontFamily.mono");
+        font-size: 0.875rem;
+        color: #e2e8f0;
+      }
+
+      table {
+        width: 100%;
+        border-collapse: collapse;
+        margin: 1.5rem 0;
+        font-size: 0.875rem;
+      }
+
+      th,
+      td {
+        text-align: left;
+        padding: 0.75rem 1rem;
+        border-bottom: 1px solid theme("colors.border");
+      }
+
+      th {
+        background-color: rgba(255, 255, 255, 0.02);
+        color: #fff;
+        font-weight: 500;
+      }
+
+      td {
+        color: #a1a1aa;
+      }
+
+      .badge {
+        display: inline-block;
+        padding: 0.125rem 0.375rem;
+        border-radius: 9999px;
+        font-size: 0.75rem;
+        font-weight: 500;
+      }
+      .badge-ga {
+        background-color: rgba(34, 197, 94, 0.1);
+        color: theme("colors.accent");
+        border: 1px solid rgba(34, 197, 94, 0.2);
+      }
+      .badge-preview {
+        background-color: rgba(168, 85, 247, 0.1);
+        color: #c084fc;
+        border: 1px solid rgba(168, 85, 247, 0.2);
+      }
+
+      html {
+        scroll-behavior: smooth;
+      }
+
+      #sidebar-overlay {
+        display: none;
+        position: fixed;
+        inset: 0;
+        background: rgba(0, 0, 0, 0.5);
+        backdrop-filter: blur(4px);
+        z-index: 40;
+      }
+      #sidebar-overlay.active {
+        display: block;
+      }
+
+      @media (max-width: 1024px) {
+        #sidebar {
+          transform: translateX(-100%);
+          transition: transform 0.3s ease-in-out;
+        }
+        #sidebar.open {
+          transform: translateX(0);
+        }
+      }
+    </style>
+  </head>
+  <body class="flex h-screen overflow-hidden">
+    <!-- Mobile Header -->
+    <div
+      class="lg:hidden fixed top-0 left-0 right-0 h-16 bg-surface border-b border-border flex items-center justify-between px-4 z-30"
+    >
+      <div class="flex items-center gap-2 text-white font-bold text-lg">
+        <iconify-icon
+          icon="solar:bolt-line-duotone"
+          class="text-accent text-2xl"
+        ></iconify-icon>
+        Lightweight
+      </div>
+      <button id="mobile-menu-btn" class="p-2 text-gray-400 hover:text-white">
+        <iconify-icon
+          icon="solar:hamburger-menu-linear"
+          class="text-2xl"
+        ></iconify-icon>
+      </button>
+    </div>
+
+    <!-- Sidebar Overlay -->
+    <div id="sidebar-overlay" class="lg:hidden"></div>
+
+    <!-- Sidebar -->
+    <aside
+      id="sidebar"
+      class="w-[250px] shrink-0 bg-surface border-r border-border flex flex-col fixed inset-y-0 left-0 z-50 lg:static"
+    >
+      <div
+        class="h-16 flex items-center gap-2 px-6 border-b border-border text-white font-bold text-lg hidden lg:flex"
+      >
+        <iconify-icon
+          icon="solar:bolt-line-duotone"
+          class="text-accent text-2xl"
+        ></iconify-icon>
+        <a href="index.html">Lightweight</a>
+      </div>
+
+      <div class="flex-1 overflow-y-auto py-6 flex flex-col gap-1">
+        <div
+          class="px-6 mb-2 text-xs font-semibold text-gray-500 uppercase tracking-wider"
+        >
+          Documentation
+        </div>
+
+        <a href="#getting-started" class="sidebar-link active"
+          >Getting Started</a
+        >
+        <a href="#api-reference" class="sidebar-link">API Reference</a>
+        <a href="#models" class="sidebar-link">Models</a>
+        <a href="#pricing" class="sidebar-link">Pricing</a>
+        <a href="#rate-limits" class="sidebar-link">Rate Limits</a>
+        <a href="#faq" class="sidebar-link">FAQ</a>
+
+        <div
+          class="px-6 mt-6 mb-2 text-xs font-semibold text-gray-500 uppercase tracking-wider flex items-center justify-between"
+        >
+          <span>Integration Guides</span>
+        </div>
+
+        <div class="flex flex-col gap-1 pr-2 pl-4 border-l border-border ml-6">
+          <a href="#guide-opencode" class="sidebar-link py-1.5 text-sm"
+            >OpenCode</a
+          >
+          <a href="#guide-cursor" class="sidebar-link py-1.5 text-sm">Cursor</a>
+          <a href="#guide-aider" class="sidebar-link py-1.5 text-sm">Aider</a>
+          <a href="#guide-zed" class="sidebar-link py-1.5 text-sm">Zed</a>
+          <a href="#guide-continue" class="sidebar-link py-1.5 text-sm"
+            >Continue</a
+          >
+          <a href="#guide-cline" class="sidebar-link py-1.5 text-sm">Cline</a>
+          <a href="#guide-windsurf" class="sidebar-link py-1.5 text-sm"
+            >Windsurf</a
+          >
+          <a href="#guide-ollama" class="sidebar-link py-1.5 text-sm">Ollama</a>
+          <a href="#guide-python" class="sidebar-link py-1.5 text-sm"
+            >OpenAI SDK (Python)</a
+          >
+          <a href="#guide-nodejs" class="sidebar-link py-1.5 text-sm"
+            >OpenAI SDK (Node.js)</a
+          >
+          <a href="#guide-langchain" class="sidebar-link py-1.5 text-sm"
+            >LangChain</a
+          >
+          <a href="#guide-litellm" class="sidebar-link py-1.5 text-sm"
+            >LiteLLM</a
+          >
+          <a href="#guide-generic" class="sidebar-link py-1.5 text-sm"
+            >Any Tool</a
+          >
+        </div>
+      </div>
+
+      <div class="p-4 border-t border-border">
+        <a
+          href="dashboard.html"
+          class="flex items-center gap-2 text-sm text-gray-400 hover:text-white transition-colors"
+        >
+          <iconify-icon icon="solar:widget-linear"></iconify-icon>
+          Dashboard
+        </a>
+      </div>
+    </aside>
+
+    <!-- Main Content -->
+    <main
+      class="flex-1 overflow-y-auto bg-background pt-16 lg:pt-0 scroll-smooth relative"
+      id="main-content"
+    >
+      <div class="max-w-4xl mx-auto px-6 py-12 pb-32 prose">
+        <div
+          class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-surface border border-border text-xs text-gray-400 mb-6"
+        >
+          <iconify-icon
+            icon="solar:book-bookmark-minimalistic-linear"
+            class="text-accent"
+          ></iconify-icon>
+          API Documentation
+        </div>
+
+        <h1 class="text-4xl md:text-5xl font-bold text-white mb-6">
+          Lightweight AI Gateway
+        </h1>
+        <p class="text-xl text-gray-400 mb-12">
+          One API key, works everywhere. A universal, OpenAI-compatible AI
+          gateway providing access to 40 frontier and open & specialized models.
+        </p>
+
+        <!-- Getting Started -->
+        <section id="getting-started" class="scroll-mt-8">
+          <h2>Getting Started</h2>
+          <p>
+            Connecting to Lightweight is incredibly simple. Because our API is
+            100% compatible with OpenAI's API format, any tool or library that
+            supports OpenAI can connect to Lightweight by changing just two
+            settings.
+          </p>
+
+          <ol>
+            <li>
+              Obtain your API key from the
+              <a href="dashboard.html">Lightweight Dashboard</a>.
+            </li>
+            <li>
+              Set your tool's API base URL to
+              <code>https://api.lightweight.one/v1</code>
+            </li>
+            <li>Use your Lightweight key in place of an OpenAI key.</li>
+          </ol>
+
+          <p class="mt-4">
+            For standard shell environments, simply export these variables:
+          </p>
+          <div class="code-block">
+            <div class="code-header">
+              <span>bash</span>
+              <button class="copy-btn" onclick="copyCode(this)">
+                <iconify-icon icon="solar:copy-linear"></iconify-icon> Copy
+              </button>
+            </div>
+            <div class="code-content">
+              <pre><code><span class="token keyword">export</span> <span class="token attribute">OPENAI_API_KEY</span><span class="token keyword">=</span><span class="token string">"lw-your-key-here"</span>
+<span class="token keyword">export</span> <span class="token attribute">OPENAI_BASE_URL</span><span class="token keyword">=</span><span class="token string">"https://api.lightweight.one/v1"</span></code></pre>
+            </div>
+          </div>
+        </section>
+
+        <!-- API Reference -->
+        <section id="api-reference" class="scroll-mt-8">
+          <h2>API Reference</h2>
+          <p>
+            The Lightweight API strictly follows the OpenAI specification,
+            meaning no new SDKs are required. You can interact with it using
+            standard HTTP requests or any OpenAI client library.
+          </p>
+
+          <ul class="space-y-2 mt-4">
+            <li>
+              <strong>Base URL:</strong>
+              <code>https://api.lightweight.one/v1</code>
+            </li>
+            <li>
+              <strong>Authentication:</strong> Bearer token via
+              <code>Authorization</code> header using your
+              <code>lw-...</code> key.
+            </li>
+          </ul>
+
+          <h3 class="mt-8">Chat Completions</h3>
+          <p><code>POST /v1/chat/completions</code></p>
+          <p>Generate text or code based on conversational context.</p>
+
+          <div class="code-block">
+            <div class="code-header">
+              <span>bash</span>
+              <button class="copy-btn" onclick="copyCode(this)">
+                <iconify-icon icon="solar:copy-linear"></iconify-icon> Copy
+              </button>
+            </div>
+            <div class="code-content">
+              <pre><code><span class="token function">curl</span> <span class="token string">"https://api.lightweight.one/v1/chat/completions"</span> \
+  <span class="token attribute">-H</span> <span class="token string">"Content-Type: application/json"</span> \
+  <span class="token attribute">-H</span> <span class="token string">"Authorization: Bearer lw-your-key-here"</span> \
+  <span class="token attribute">-d</span> <span class="token string">'{
+    "model": "gpt-5",
+    "messages": [
+      {"role": "system", "content": "You are a helpful assistant."},
+      {"role": "user", "content": "Write a quicksort in Python."}
+    ],
+    "stream": true
+  }'</span></code></pre>
+            </div>
+          </div>
+
+          <p>
+            <strong>Streaming Support:</strong> Set
+            <code>"stream": true</code> in your request to receive Server-Sent
+            Events (SSE) exactly matching OpenAI's streaming format.
+          </p>
+
+          <h3 class="mt-8">List Models</h3>
+          <p><code>GET /v1/models</code></p>
+          <p>
+            Returns a list of all currently accessible models on your account.
+          </p>
+
+          <div class="code-block">
+            <div class="code-header">
+              <span>bash</span>
+              <button class="copy-btn" onclick="copyCode(this)">
+                <iconify-icon icon="solar:copy-linear"></iconify-icon> Copy
+              </button>
+            </div>
+            <div class="code-content">
+              <pre><code><span class="token function">curl</span> <span class="token string">"https://api.lightweight.one/v1/models"</span> \
+  <span class="token attribute">-H</span> <span class="token string">"Authorization: Bearer lw-your-key-here"</span></code></pre>
+            </div>
+          </div>
+
+          <h3 class="mt-8">Check Usage</h3>
+          <p><code>GET /v1/usage</code></p>
+          <p>Returns your current token consumption and remaining quota.</p>
+
+          <h3 class="mt-8">Error Codes</h3>
+          <table>
+            <thead>
+              <tr>
+                <th>Status</th>
+                <th>Description</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><code>401 Unauthorized</code></td>
+                <td>Invalid, revoked, or missing API key.</td>
+              </tr>
+              <tr>
+                <td><code>403 Forbidden</code></td>
+                <td>Account limit reached, or model access denied.</td>
+              </tr>
+              <tr>
+                <td><code>429 Too Many Requests</code></td>
+                <td>
+                  Rate limit exceeded. Check <code>Retry-After</code> header.
+                </td>
+              </tr>
+              <tr>
+                <td><code>502 Bad Gateway</code></td>
+                <td>Upstream provider error or timeout.</td>
+              </tr>
+            </tbody>
+          </table>
+        </section>
+
+        <!-- Models -->
+        <section id="models" class="scroll-mt-8">
+          <h2>Models Catalog</h2>
+          <p>
+            We provide unified access to state-of-the-art models from leading providers. Use the
+            exact string in the "Model ID" column for the
+            <code>model</code> parameter in your API requests.
+          </p>
+          <p class="text-sm text-gray-400 mt-2">
+            The catalog is fetched live from the API. Use <code>GET /v1/models</code> for the full list.
+          </p>
+
+          <div id="models-table" class="mt-6">
+            <p class="text-gray-400">Loading models...</p>
+          </div>
+        </section>
+
+
+        <!-- Pricing -->
+        <section id="pricing" class="scroll-mt-8">
+          <h2>Model Pricing</h2>
+          <p>
+            Token costs per model, per 1 million tokens. Prices reflect provider rates passed through Lightweight.
+          </p>
+
+          <div class="max-h-[600px] overflow-y-auto my-6 rounded-lg border border-border">
+            <table class="!m-0">
+              <thead class="sticky top-0 z-10 shadow-[0_1px_0_rgba(255,255,255,0.05)]">
+                <tr>
+                  <th class="bg-[#111111]">Model</th>
+                  <th class="bg-[#111111]">Provider</th>
+                  <th class="bg-[#111111]">Input $/1M</th>
+                  <th class="bg-[#111111]">Output $/1M</th>
+                  <th class="bg-[#111111]">Context</th>
+                  <th class="bg-[#111111]">Category</th>
+                </tr>
+              </thead>
+              <tbody>
+              <tr>
+                <th colspan="6" class="border-y border-border py-3">
+                  <div class="flex items-center gap-2">
+                    <iconify-icon icon="simple-icons:openai"></iconify-icon> OpenAI
+                  </div>
+                </th>
+              </tr>
+              <tr>
+                <td><code>gpt-5.3-codex</code></td>
+                <td>OpenAI</td>
+                <td>$1.75</td>
+                <td>$14.00</td>
+                <td>272K</td>
+                <td><span class="px-2 py-1 rounded-md text-xs font-medium border border-emerald-400/10 bg-emerald-400/10 text-emerald-400">Frontier</span></td>
+              </tr>
+              <tr>
+                <td><code>gpt-5.2-codex</code></td>
+                <td>OpenAI</td>
+                <td>$1.75</td>
+                <td>$14.00</td>
+                <td>128K</td>
+                <td><span class="px-2 py-1 rounded-md text-xs font-medium border border-emerald-400/10 bg-emerald-400/10 text-emerald-400">Frontier</span></td>
+              </tr>
+              <tr>
+                <td><code>gpt-5.2</code></td>
+                <td>OpenAI</td>
+                <td>$1.75</td>
+                <td>$14.00</td>
+                <td>128K</td>
+                <td><span class="px-2 py-1 rounded-md text-xs font-medium border border-emerald-400/10 bg-emerald-400/10 text-emerald-400">Frontier</span></td>
+              </tr>
+              <tr>
+                <td><code>gpt-5.1-codex</code></td>
+                <td>OpenAI</td>
+                <td>$1.25</td>
+                <td>$10.00</td>
+                <td>128K</td>
+                <td><span class="px-2 py-1 rounded-md text-xs font-medium border border-emerald-400/10 bg-emerald-400/10 text-emerald-400">Frontier</span></td>
+              </tr>
+              <tr>
+                <td><code>gpt-5.1-codex-max</code></td>
+                <td>OpenAI</td>
+                <td>$1.25</td>
+                <td>$10.00</td>
+                <td>128K</td>
+                <td><span class="px-2 py-1 rounded-md text-xs font-medium border border-emerald-400/10 bg-emerald-400/10 text-emerald-400">Frontier</span></td>
+              </tr>
+              <tr>
+                <td><code>gpt-5.1-codex-mini</code></td>
+                <td>OpenAI</td>
+                <td>$0.25</td>
+                <td>$2.00</td>
+                <td>128K</td>
+                <td><span class="px-2 py-1 rounded-md text-xs font-medium border border-amber-400/10 bg-amber-400/10 text-amber-400">Efficient</span></td>
+              </tr>
+              <tr>
+                <td><code>gpt-5.1</code></td>
+                <td>OpenAI</td>
+                <td>$1.25</td>
+                <td>$10.00</td>
+                <td>128K</td>
+                <td><span class="px-2 py-1 rounded-md text-xs font-medium border border-emerald-400/10 bg-emerald-400/10 text-emerald-400">Frontier</span></td>
+              </tr>
+              <tr>
+                <td><code>gpt-5</code></td>
+                <td>OpenAI</td>
+                <td>$1.25</td>
+                <td>$10.00</td>
+                <td>400K</td>
+                <td><span class="px-2 py-1 rounded-md text-xs font-medium border border-emerald-400/10 bg-emerald-400/10 text-emerald-400">Frontier</span></td>
+              </tr>
+              <tr>
+                <td><code>gpt-5-chat</code></td>
+                <td>OpenAI</td>
+                <td>$1.25</td>
+                <td>$10.00</td>
+                <td>400K</td>
+                <td><span class="px-2 py-1 rounded-md text-xs font-medium border border-emerald-400/10 bg-emerald-400/10 text-emerald-400">Frontier</span></td>
+              </tr>
+              <tr>
+                <td><code>gpt-5-mini</code></td>
+                <td>OpenAI</td>
+                <td>$0.25</td>
+                <td>$2.00</td>
+                <td>128K</td>
+                <td><span class="px-2 py-1 rounded-md text-xs font-medium border border-amber-400/10 bg-amber-400/10 text-amber-400">Efficient</span></td>
+              </tr>
+              <tr>
+                <td><code>gpt-5-nano</code></td>
+                <td>OpenAI</td>
+                <td>$0.05</td>
+                <td>$0.40</td>
+                <td>400K</td>
+                <td><span class="px-2 py-1 rounded-md text-xs font-medium border border-sky-400/10 bg-sky-400/10 text-sky-400">Compact</span></td>
+              </tr>
+              <tr>
+                <td><code>gpt-4.1</code></td>
+                <td>OpenAI</td>
+                <td>$2.00</td>
+                <td>$8.00</td>
+                <td>1M</td>
+                <td><span class="px-2 py-1 rounded-md text-xs font-medium border border-emerald-400/10 bg-emerald-400/10 text-emerald-400">Frontier</span></td>
+              </tr>
+              <tr>
+                <td><code>gpt-4.1-mini</code></td>
+                <td>OpenAI</td>
+                <td>$0.40</td>
+                <td>$1.60</td>
+                <td>1M</td>
+                <td><span class="px-2 py-1 rounded-md text-xs font-medium border border-amber-400/10 bg-amber-400/10 text-amber-400">Efficient</span></td>
+              </tr>
+              <tr>
+                <td><code>gpt-4.1-nano</code></td>
+                <td>OpenAI</td>
+                <td>$0.10</td>
+                <td>$0.40</td>
+                <td>1M</td>
+                <td><span class="px-2 py-1 rounded-md text-xs font-medium border border-sky-400/10 bg-sky-400/10 text-sky-400">Compact</span></td>
+              </tr>
+              <tr>
+                <td><code>gpt-4o</code></td>
+                <td>OpenAI</td>
+                <td>$2.50</td>
+                <td>$10.00</td>
+                <td>128K</td>
+                <td><span class="px-2 py-1 rounded-md text-xs font-medium border border-emerald-400/10 bg-emerald-400/10 text-emerald-400">Frontier</span></td>
+              </tr>
+              <tr>
+                <td><code>gpt-4o-mini</code></td>
+                <td>OpenAI</td>
+                <td>$0.15</td>
+                <td>$0.60</td>
+                <td>128K</td>
+                <td><span class="px-2 py-1 rounded-md text-xs font-medium border border-sky-400/10 bg-sky-400/10 text-sky-400">Compact</span></td>
+              </tr>
+              <tr>
+                <td><code>gpt-4</code></td>
+                <td>OpenAI</td>
+                <td>$30.00</td>
+                <td>$60.00</td>
+                <td>8K</td>
+                <td><span class="px-2 py-1 rounded-md text-xs font-medium border border-gray-400/10 bg-gray-400/10 text-gray-400">Legacy</span></td>
+              </tr>
+              <tr>
+                <td><code>gpt-3.5-turbo</code></td>
+                <td>OpenAI</td>
+                <td>$0.50</td>
+                <td>$1.50</td>
+                <td>16K</td>
+                <td><span class="px-2 py-1 rounded-md text-xs font-medium border border-gray-400/10 bg-gray-400/10 text-gray-400">Legacy</span></td>
+              </tr>
+              <tr>
+                <td><code>o3</code></td>
+                <td>OpenAI</td>
+                <td>$2.00</td>
+                <td>$8.00</td>
+                <td>200K</td>
+                <td><span class="px-2 py-1 rounded-md text-xs font-medium border border-blue-400/10 bg-blue-400/10 text-blue-400">Reasoning</span></td>
+              </tr>
+              <tr>
+                <td><code>o3-mini</code></td>
+                <td>OpenAI</td>
+                <td>$1.10</td>
+                <td>$4.40</td>
+                <td>200K</td>
+                <td><span class="px-2 py-1 rounded-md text-xs font-medium border border-blue-400/10 bg-blue-400/10 text-blue-400">Reasoning</span></td>
+              </tr>
+              <tr>
+                <td><code>o4-mini</code></td>
+                <td>OpenAI</td>
+                <td>$1.10</td>
+                <td>$4.40</td>
+                <td>200K</td>
+                <td><span class="px-2 py-1 rounded-md text-xs font-medium border border-blue-400/10 bg-blue-400/10 text-blue-400">Reasoning</span></td>
+              </tr>
+              <tr>
+                <td><code>o1</code></td>
+                <td>OpenAI</td>
+                <td>$15.00</td>
+                <td>$60.00</td>
+                <td>200K</td>
+                <td><span class="px-2 py-1 rounded-md text-xs font-medium border border-blue-400/10 bg-blue-400/10 text-blue-400">Reasoning</span></td>
+              </tr>
+              <tr>
+                <td><code>o1-mini</code></td>
+                <td>OpenAI</td>
+                <td>$1.10</td>
+                <td>$4.40</td>
+                <td>128K</td>
+                <td><span class="px-2 py-1 rounded-md text-xs font-medium border border-blue-400/10 bg-blue-400/10 text-blue-400">Reasoning</span></td>
+              </tr>
+              <tr>
+                <td><code>o1-preview</code></td>
+                <td>OpenAI</td>
+                <td>$15.00</td>
+                <td>$60.00</td>
+                <td>128K</td>
+                <td><span class="px-2 py-1 rounded-md text-xs font-medium border border-blue-400/10 bg-blue-400/10 text-blue-400">Reasoning</span></td>
+              </tr>
+              <tr>
+                <th colspan="6" class="border-y border-border py-3">
+                  <div class="flex items-center gap-2">
+                    <iconify-icon icon="simple-icons:anthropic"></iconify-icon> Anthropic
+                  </div>
+                </th>
+              </tr>
+              <tr>
+                <td><code>claude-opus-4.6</code></td>
+                <td>Anthropic</td>
+                <td>$5.00</td>
+                <td>$25.00</td>
+                <td>200K</td>
+                <td><span class="px-2 py-1 rounded-md text-xs font-medium border border-emerald-400/10 bg-emerald-400/10 text-emerald-400">Frontier</span></td>
+              </tr>
+              <tr>
+                <td><code>claude-opus-4.6-fast</code></td>
+                <td>Anthropic</td>
+                <td>$5.00</td>
+                <td>$25.00</td>
+                <td>128K</td>
+                <td><span class="px-2 py-1 rounded-md text-xs font-medium border border-emerald-400/10 bg-emerald-400/10 text-emerald-400">Frontier</span></td>
+              </tr>
+              <tr>
+                <td><code>claude-opus-4.5</code></td>
+                <td>Anthropic</td>
+                <td>$5.00</td>
+                <td>$25.00</td>
+                <td>200K</td>
+                <td><span class="px-2 py-1 rounded-md text-xs font-medium border border-emerald-400/10 bg-emerald-400/10 text-emerald-400">Frontier</span></td>
+              </tr>
+              <tr>
+                <td><code>claude-sonnet-4.6</code></td>
+                <td>Anthropic</td>
+                <td>$3.00</td>
+                <td>$15.00</td>
+                <td>200K</td>
+                <td><span class="px-2 py-1 rounded-md text-xs font-medium border border-emerald-400/10 bg-emerald-400/10 text-emerald-400">Frontier</span></td>
+              </tr>
+              <tr>
+                <td><code>claude-sonnet-4.5</code></td>
+                <td>Anthropic</td>
+                <td>$3.00</td>
+                <td>$15.00</td>
+                <td>200K</td>
+                <td><span class="px-2 py-1 rounded-md text-xs font-medium border border-emerald-400/10 bg-emerald-400/10 text-emerald-400">Frontier</span></td>
+              </tr>
+              <tr>
+                <td><code>claude-sonnet-4</code></td>
+                <td>Anthropic</td>
+                <td>$3.00</td>
+                <td>$15.00</td>
+                <td>200K</td>
+                <td><span class="px-2 py-1 rounded-md text-xs font-medium border border-emerald-400/10 bg-emerald-400/10 text-emerald-400">Frontier</span></td>
+              </tr>
+              <tr>
+                <td><code>claude-haiku-4.5</code></td>
+                <td>Anthropic</td>
+                <td>$1.00</td>
+                <td>$5.00</td>
+                <td>200K</td>
+                <td><span class="px-2 py-1 rounded-md text-xs font-medium border border-amber-400/10 bg-amber-400/10 text-amber-400">Efficient</span></td>
+              </tr>
+              <tr>
+                <th colspan="6" class="border-y border-border py-3">
+                  <div class="flex items-center gap-2">
+                    <iconify-icon icon="simple-icons:google"></iconify-icon> Google
+                  </div>
+                </th>
+              </tr>
+              <tr>
+                <td><code>gemini-3.1-pro-preview</code></td>
+                <td>Google</td>
+                <td>$2.00</td>
+                <td>$12.00</td>
+                <td>1M</td>
+                <td><span class="px-2 py-1 rounded-md text-xs font-medium border border-emerald-400/10 bg-emerald-400/10 text-emerald-400">Frontier</span></td>
+              </tr>
+              <tr>
+                <td><code>gemini-3-pro-preview</code></td>
+                <td>Google</td>
+                <td>$2.00</td>
+                <td>$12.00</td>
+                <td>1M</td>
+                <td><span class="px-2 py-1 rounded-md text-xs font-medium border border-emerald-400/10 bg-emerald-400/10 text-emerald-400">Frontier</span></td>
+              </tr>
+              <tr>
+                <td><code>gemini-3-flash-preview</code></td>
+                <td>Google</td>
+                <td>$0.15</td>
+                <td>$0.60</td>
+                <td>1M</td>
+                <td><span class="px-2 py-1 rounded-md text-xs font-medium border border-sky-400/10 bg-sky-400/10 text-sky-400">Compact</span></td>
+              </tr>
+              <tr>
+                <td><code>gemini-2.5-pro</code></td>
+                <td>Google</td>
+                <td>$1.25</td>
+                <td>$10.00</td>
+                <td>1M</td>
+                <td><span class="px-2 py-1 rounded-md text-xs font-medium border border-emerald-400/10 bg-emerald-400/10 text-emerald-400">Frontier</span></td>
+              </tr>
+              <tr>
+                <th colspan="6" class="border-y border-border py-3">
+                  <div class="flex items-center gap-2">
+                    <iconify-icon icon="simple-icons:meta"></iconify-icon> Meta
+                  </div>
+                </th>
+              </tr>
+              <tr>
+                <td><code>llama-4-maverick</code></td>
+                <td>Meta</td>
+                <td>$0.15</td>
+                <td>$0.60</td>
+                <td>1M</td>
+                <td><span class="px-2 py-1 rounded-md text-xs font-medium border border-violet-400/10 bg-violet-400/10 text-violet-400">Open Source</span></td>
+              </tr>
+              <tr>
+                <td><code>llama-4-scout</code></td>
+                <td>Meta</td>
+                <td>$0.15</td>
+                <td>$0.59</td>
+                <td>10M</td>
+                <td><span class="px-2 py-1 rounded-md text-xs font-medium border border-violet-400/10 bg-violet-400/10 text-violet-400">Open Source</span></td>
+              </tr>
+              <tr>
+                <td><code>llama-3.3-70b</code></td>
+                <td>Meta</td>
+                <td>$0.18</td>
+                <td>$0.70</td>
+                <td>128K</td>
+                <td><span class="px-2 py-1 rounded-md text-xs font-medium border border-violet-400/10 bg-violet-400/10 text-violet-400">Open Source</span></td>
+              </tr>
+              <tr>
+                <td><code>llama-3.2-90b-vision</code></td>
+                <td>Meta</td>
+                <td>$0.20</td>
+                <td>$0.80</td>
+                <td>128K</td>
+                <td><span class="px-2 py-1 rounded-md text-xs font-medium border border-violet-400/10 bg-violet-400/10 text-violet-400">Open Source</span></td>
+              </tr>
+              <tr>
+                <td><code>llama-3.2-11b-vision</code></td>
+                <td>Meta</td>
+                <td>$0.05</td>
+                <td>$0.20</td>
+                <td>128K</td>
+                <td><span class="px-2 py-1 rounded-md text-xs font-medium border border-sky-400/10 bg-sky-400/10 text-sky-400">Compact</span></td>
+              </tr>
+              <tr>
+                <td><code>llama-3.1-405b</code></td>
+                <td>Meta</td>
+                <td>$0.80</td>
+                <td>$2.40</td>
+                <td>128K</td>
+                <td><span class="px-2 py-1 rounded-md text-xs font-medium border border-violet-400/10 bg-violet-400/10 text-violet-400">Open Source</span></td>
+              </tr>
+              <tr>
+                <td><code>llama-3.1-8b</code></td>
+                <td>Meta</td>
+                <td>$0.03</td>
+                <td>$0.10</td>
+                <td>128K</td>
+                <td><span class="px-2 py-1 rounded-md text-xs font-medium border border-sky-400/10 bg-sky-400/10 text-sky-400">Compact</span></td>
+              </tr>
+              <tr>
+                <th colspan="6" class="border-y border-border py-3">
+                  <div class="flex items-center gap-2">
+                    <iconify-icon icon="simple-icons:microsoft"></iconify-icon> Microsoft
+                  </div>
+                </th>
+              </tr>
+              <tr>
+                <td><code>phi-4-reasoning</code></td>
+                <td>Microsoft</td>
+                <td>$0.14</td>
+                <td>$0.56</td>
+                <td>32K</td>
+                <td><span class="px-2 py-1 rounded-md text-xs font-medium border border-blue-400/10 bg-blue-400/10 text-blue-400">Reasoning</span></td>
+              </tr>
+              <tr>
+                <td><code>phi-4</code></td>
+                <td>Microsoft</td>
+                <td>$0.06</td>
+                <td>$0.14</td>
+                <td>16K</td>
+                <td><span class="px-2 py-1 rounded-md text-xs font-medium border border-sky-400/10 bg-sky-400/10 text-sky-400">Compact</span></td>
+              </tr>
+              <tr>
+                <td><code>phi-4-mini-reasoning</code></td>
+                <td>Microsoft</td>
+                <td>$0.06</td>
+                <td>$0.14</td>
+                <td>128K</td>
+                <td><span class="px-2 py-1 rounded-md text-xs font-medium border border-blue-400/10 bg-blue-400/10 text-blue-400">Reasoning</span></td>
+              </tr>
+              <tr>
+                <td><code>phi-4-mini-instruct</code></td>
+                <td>Microsoft</td>
+                <td>$0.03</td>
+                <td>$0.07</td>
+                <td>128K</td>
+                <td><span class="px-2 py-1 rounded-md text-xs font-medium border border-sky-400/10 bg-sky-400/10 text-sky-400">Compact</span></td>
+              </tr>
+              <tr>
+                <td><code>phi-4-multimodal-instruct</code></td>
+                <td>Microsoft</td>
+                <td>$0.10</td>
+                <td>$0.20</td>
+                <td>128K</td>
+                <td><span class="px-2 py-1 rounded-md text-xs font-medium border border-sky-400/10 bg-sky-400/10 text-sky-400">Compact</span></td>
+              </tr>
+              <tr>
+                <td><code>mai-ds-r1</code></td>
+                <td>Microsoft</td>
+                <td>$0.14</td>
+                <td>$0.28</td>
+                <td>128K</td>
+                <td><span class="px-2 py-1 rounded-md text-xs font-medium border border-blue-400/10 bg-blue-400/10 text-blue-400">Reasoning</span></td>
+              </tr>
+              <tr>
+                <th colspan="6" class="border-y border-border py-3">
+                  <div class="flex items-center gap-2">
+                    <iconify-icon icon="simple-icons:xdotorg"></iconify-icon> xAI
+                  </div>
+                </th>
+              </tr>
+              <tr>
+                <td><code>grok-3</code></td>
+                <td>xAI</td>
+                <td>$3.00</td>
+                <td>$15.00</td>
+                <td>131K</td>
+                <td><span class="px-2 py-1 rounded-md text-xs font-medium border border-emerald-400/10 bg-emerald-400/10 text-emerald-400">Frontier</span></td>
+              </tr>
+              <tr>
+                <td><code>grok-3-mini</code></td>
+                <td>xAI</td>
+                <td>$0.30</td>
+                <td>$0.50</td>
+                <td>131K</td>
+                <td><span class="px-2 py-1 rounded-md text-xs font-medium border border-blue-400/10 bg-blue-400/10 text-blue-400">Reasoning</span></td>
+              </tr>
+              <tr>
+                <td><code>grok-code-fast-1</code></td>
+                <td>xAI</td>
+                <td>$0.30</td>
+                <td>$0.50</td>
+                <td>131K</td>
+                <td><span class="px-2 py-1 rounded-md text-xs font-medium border border-amber-400/10 bg-amber-400/10 text-amber-400">Efficient</span></td>
+              </tr>
+              <tr>
+                <th colspan="6" class="border-y border-border py-3">
+                  <div class="flex items-center gap-2">
+                    <iconify-icon icon="simple-icons:deepseek"></iconify-icon> DeepSeek
+                  </div>
+                </th>
+              </tr>
+              <tr>
+                <td><code>deepseek-r1</code></td>
+                <td>DeepSeek</td>
+                <td>$0.30</td>
+                <td>$1.20</td>
+                <td>164K</td>
+                <td><span class="px-2 py-1 rounded-md text-xs font-medium border border-blue-400/10 bg-blue-400/10 text-blue-400">Reasoning</span></td>
+              </tr>
+              <tr>
+                <td><code>deepseek-r1-0528</code></td>
+                <td>DeepSeek</td>
+                <td>$0.40</td>
+                <td>$1.75</td>
+                <td>164K</td>
+                <td><span class="px-2 py-1 rounded-md text-xs font-medium border border-blue-400/10 bg-blue-400/10 text-blue-400">Reasoning</span></td>
+              </tr>
+              <tr>
+                <td><code>deepseek-v3-0324</code></td>
+                <td>DeepSeek</td>
+                <td>$0.24</td>
+                <td>$0.84</td>
+                <td>164K</td>
+                <td><span class="px-2 py-1 rounded-md text-xs font-medium border border-amber-400/10 bg-amber-400/10 text-amber-400">Efficient</span></td>
+              </tr>
+              <tr>
+                <th colspan="6" class="border-y border-border py-3">
+                  <div class="flex items-center gap-2">
+                    <iconify-icon icon="simple-icons:mistral"></iconify-icon> Mistral
+                  </div>
+                </th>
+              </tr>
+              <tr>
+                <td><code>mistral-medium-2505</code></td>
+                <td>Mistral</td>
+                <td>$0.40</td>
+                <td>$2.00</td>
+                <td>131K</td>
+                <td><span class="px-2 py-1 rounded-md text-xs font-medium border border-emerald-400/10 bg-emerald-400/10 text-emerald-400">Frontier</span></td>
+              </tr>
+              <tr>
+                <td><code>mistral-small-2503</code></td>
+                <td>Mistral</td>
+                <td>$0.10</td>
+                <td>$0.30</td>
+                <td>128K</td>
+                <td><span class="px-2 py-1 rounded-md text-xs font-medium border border-amber-400/10 bg-amber-400/10 text-amber-400">Efficient</span></td>
+              </tr>
+              <tr>
+                <td><code>codestral-2501</code></td>
+                <td>Mistral</td>
+                <td>$0.30</td>
+                <td>$0.90</td>
+                <td>32K</td>
+                <td><span class="px-2 py-1 rounded-md text-xs font-medium border border-amber-400/10 bg-amber-400/10 text-amber-400">Efficient</span></td>
+              </tr>
+              <tr>
+                <td><code>ministral-3b</code></td>
+                <td>Mistral</td>
+                <td>$0.04</td>
+                <td>$0.10</td>
+                <td>128K</td>
+                <td><span class="px-2 py-1 rounded-md text-xs font-medium border border-sky-400/10 bg-sky-400/10 text-sky-400">Compact</span></td>
+              </tr>
+              <tr>
+                <th colspan="6" class="border-y border-border py-3">
+                  <div class="flex items-center gap-2">
+                    Cohere
+                  </div>
+                </th>
+              </tr>
+              <tr>
+                <td><code>cohere-command-a</code></td>
+                <td>Cohere</td>
+                <td>$2.50</td>
+                <td>$10.00</td>
+                <td>256K</td>
+                <td><span class="px-2 py-1 rounded-md text-xs font-medium border border-emerald-400/10 bg-emerald-400/10 text-emerald-400">Frontier</span></td>
+              </tr>
+              <tr>
+                <td><code>cohere-command-r-08-2024</code></td>
+                <td>Cohere</td>
+                <td>$0.15</td>
+                <td>$0.60</td>
+                <td>128K</td>
+                <td><span class="px-2 py-1 rounded-md text-xs font-medium border border-amber-400/10 bg-amber-400/10 text-amber-400">Efficient</span></td>
+              </tr>
+              <tr>
+                <td><code>cohere-command-r-plus-08-2024</code></td>
+                <td>Cohere</td>
+                <td>$2.50</td>
+                <td>$10.00</td>
+                <td>128K</td>
+                <td><span class="px-2 py-1 rounded-md text-xs font-medium border border-emerald-400/10 bg-emerald-400/10 text-emerald-400">Frontier</span></td>
+              </tr>
+              <tr>
+                <th colspan="6" class="border-y border-border py-3">
+                  <div class="flex items-center gap-2">
+                    AI21
+                  </div>
+                </th>
+              </tr>
+              <tr>
+                <td><code>ai21-jamba-1.5-large</code></td>
+                <td>AI21</td>
+                <td>$2.00</td>
+                <td>$8.00</td>
+                <td>256K</td>
+                <td><span class="px-2 py-1 rounded-md text-xs font-medium border border-emerald-400/10 bg-emerald-400/10 text-emerald-400">Frontier</span></td>
+              </tr>
+              </tbody>
+            </table>
+          </div>
+
+          <p class="text-sm text-gray-400 mt-4">
+            Dated model variants (e.g., <code>gpt-4o-2024-08-06</code>) use the same pricing as their base model.
+          </p>
+          <p class="text-sm text-gray-400 mt-2 mb-10">
+            Prices reflect provider rates. Lightweight does not add markup. Your plan's token quota covers all models — use the model that fits your needs.
+          </p>
+        </section>
+
+
+        <!-- Integration Guides -->
+        <section id="integration-guides" class="scroll-mt-8">
+          <h2>Integration Guides</h2>
+          <p>
+            Because Lightweight perfectly mimics the OpenAI API, you can
+            seamlessly connect practically any AI coding tool, editor, or
+            framework. Find your tool below.
+          </p>
+
+          <!-- OpenCode -->
+          <div id="guide-opencode" class="mt-10 scroll-mt-8 pt-4">
+            <h3>OpenCode</h3>
+            <p>
+              OpenCode supports generic OpenAI-compatible endpoints directly in
+              its settings.
+            </p>
+            <ol>
+              <li>Open OpenCode Settings.</li>
+              <li>
+                Find the AI Provider section and select
+                <strong>OpenAI-compatible</strong>.
+              </li>
+              <li>
+                Set <strong>Base URL</strong> to
+                <code>https://api.lightweight.one/v1</code>.
+              </li>
+              <li>
+                Set <strong>API Key</strong> to your <code>lw-...</code> key.
+              </li>
+              <li>Save and test a prompt.</li>
+            </ol>
+            <p class="text-sm mt-3 text-gray-400 italic">
+              Tip: You can manually type the model name like
+              <code>gpt-4.1</code> if it doesn't appear in a dropdown.
+            </p>
+          </div>
+
+          <!-- Cursor -->
+          <div
+            id="guide-cursor"
+            class="mt-10 scroll-mt-8 border-t border-border pt-8"
+          >
+            <h3>Cursor</h3>
+            <p>
+              Cursor allows overriding the default OpenAI Base URL for custom
+              proxy routing.
+            </p>
+            <ol>
+              <li>Open Cursor Settings.</li>
+              <li>
+                Navigate to <strong>Models</strong> > <strong>OpenAI</strong>.
+              </li>
+              <li>Toggle "Override OpenAI Base URL".</li>
+              <li>
+                Set the URL to <code>https://api.lightweight.one/v1</code>.
+              </li>
+              <li>
+                Paste your <code>lw-...</code> key in the OpenAI API Key field.
+              </li>
+              <li>
+                Ensure external infrastructure integration toggles are off.
+              </li>
+            </ol>
+          </div>
+
+          <!-- Aider -->
+          <div
+            id="guide-aider"
+            class="mt-10 scroll-mt-8 border-t border-border pt-8"
+          >
+            <h3>Aider</h3>
+            <p>
+              Aider is an AI pair programming tool in your terminal. You can
+              pass the API settings as CLI arguments or environment variables.
+            </p>
+            <div class="code-block">
+              <div class="code-header">
+                <span>bash</span>
+                <button class="copy-btn" onclick="copyCode(this)">
+                  <iconify-icon icon="solar:copy-linear"></iconify-icon> Copy
+                </button>
+              </div>
+              <div class="code-content">
+                <pre><code><span class="token function">aider</span> <span class="token attribute">--openai-api-key</span> <span class="token string">"lw-your-key-here"</span> <span class="token attribute">--openai-api-base</span> <span class="token string">"https://api.lightweight.one/v1"</span> <span class="token attribute">--model</span> <span class="token string">"gpt-4o"</span></code></pre>
+              </div>
+            </div>
+            <p class="text-sm mt-3 text-gray-400 italic">
+              Alternatively, export <code>OPENAI_API_KEY</code> and
+              <code>OPENAI_API_BASE</code> in your shell profile.
+            </p>
+          </div>
+
+          <!-- Zed -->
+          <div
+            id="guide-zed"
+            class="mt-10 scroll-mt-8 border-t border-border pt-8"
+          >
+            <h3>Zed</h3>
+            <p>
+              Zed's built-in AI assistant can be configured via your
+              <code>settings.json</code>.
+            </p>
+            <ol>
+              <li>Open Zed and edit your <code>settings.json</code>.</li>
+              <li>Add or update the <code>language_models</code> block:</li>
+            </ol>
+            <div class="code-block">
+              <div class="code-header">
+                <span>json</span>
+                <button class="copy-btn" onclick="copyCode(this)">
+                  <iconify-icon icon="solar:copy-linear"></iconify-icon> Copy
+                </button>
+              </div>
+              <div class="code-content">
+                <pre><code><span class="token string">"language_models"</span><span class="token keyword">:</span> {
+  <span class="token string">"openai"</span><span class="token keyword">:</span> {
+    <span class="token string">"api_url"</span><span class="token keyword">:</span> <span class="token string">"https://api.lightweight.one/v1"</span><span class="token keyword">,</span>
+    <span class="token string">"api_key"</span><span class="token keyword">:</span> <span class="token string">"lw-your-key-here"</span>
+  }
+}</code></pre>
+              </div>
+            </div>
+          </div>
+
+          <!-- Continue -->
+          <div
+            id="guide-continue"
+            class="mt-10 scroll-mt-8 border-t border-border pt-8"
+          >
+            <h3>Continue</h3>
+            <p>Continue is an open-source IDE extension.</p>
+            <ol>
+              <li>Open your <code>~/.continue/config.json</code> file.</li>
+              <li>
+                In the <code>models</code> array, configure an OpenAI provider:
+              </li>
+            </ol>
+            <div class="code-block">
+              <div class="code-header">
+                <span>json</span>
+                <button class="copy-btn" onclick="copyCode(this)">
+                  <iconify-icon icon="solar:copy-linear"></iconify-icon> Copy
+                </button>
+              </div>
+              <div class="code-content">
+                <pre><code>{
+  <span class="token string">"models"</span><span class="token keyword">:</span> [
+    {
+      <span class="token string">"title"</span><span class="token keyword">:</span> <span class="token string">"Lightweight Opus"</span><span class="token keyword">,</span>
+      <span class="token string">"provider"</span><span class="token keyword">:</span> <span class="token string">"openai"</span><span class="token keyword">,</span>
+      <span class="token string">"model"</span><span class="token keyword">:</span> <span class="token string">"gpt-4.1"</span><span class="token keyword">,</span>
+      <span class="token string">"apiKey"</span><span class="token keyword">:</span> <span class="token string">"lw-your-key-here"</span><span class="token keyword">,</span>
+      <span class="token string">"apiBase"</span><span class="token keyword">:</span> <span class="token string">"https://api.lightweight.one/v1"</span>
+    }
+  ]
+}</code></pre>
+              </div>
+            </div>
+          </div>
+
+          <!-- Cline -->
+          <div
+            id="guide-cline"
+            class="mt-10 scroll-mt-8 border-t border-border pt-8"
+          >
+            <h3>Cline</h3>
+            <p>Cline perfectly matches any OpenAI-compatible endpoint.</p>
+            <ol>
+              <li>Open Cline's settings panel.</li>
+              <li>
+                Under <strong>API Provider</strong>, select
+                <strong>OpenAI Compatible</strong>.
+              </li>
+              <li>
+                Set <strong>Base URL</strong> to
+                <code>https://api.lightweight.one/v1</code>.
+              </li>
+              <li>Paste your <code>lw-...</code> key in the API Key field.</li>
+              <li>Specify the Model ID (e.g., <code>gpt-5</code>).</li>
+            </ol>
+          </div>
+
+          <!-- Windsurf -->
+          <div
+            id="guide-windsurf"
+            class="mt-10 scroll-mt-8 border-t border-border pt-8"
+          >
+            <h3>Windsurf</h3>
+            <p>Windsurf can be configured to use external API gateways.</p>
+            <ol>
+              <li>Open Windsurf settings.</li>
+              <li>Navigate to the API or Models configuration section.</li>
+              <li>Select <strong>Custom API Endpoint</strong>.</li>
+              <li>
+                Enter the Base URL: <code>https://api.lightweight.one/v1</code>.
+              </li>
+              <li>Input your Lightweight API key.</li>
+            </ol>
+          </div>
+
+          <!-- Ollama -->
+          <div
+            id="guide-ollama"
+            class="mt-10 scroll-mt-8 border-t border-border pt-8"
+          >
+            <h3>Ollama</h3>
+            <p>
+              If you use tools that expect an Ollama-style proxy but want to
+              route them through Lightweight, set these environment variables
+              before starting the tool.
+            </p>
+            <div class="code-block">
+              <div class="code-header">
+                <span>bash</span>
+                <button class="copy-btn" onclick="copyCode(this)">
+                  <iconify-icon icon="solar:copy-linear"></iconify-icon> Copy
+                </button>
+              </div>
+              <div class="code-content">
+                <pre><code><span class="token keyword">export</span> <span class="token attribute">OLLAMA_OPENAI_BASE_URL</span><span class="token keyword">=</span><span class="token string">"https://api.lightweight.one/v1"</span>
+<span class="token keyword">export</span> <span class="token attribute">OLLAMA_OPENAI_API_KEY</span><span class="token keyword">=</span><span class="token string">"lw-your-key-here"</span></code></pre>
+              </div>
+            </div>
+          </div>
+
+          <!-- OpenAI SDK (Python) -->
+          <div
+            id="guide-python"
+            class="mt-10 scroll-mt-8 border-t border-border pt-8"
+          >
+            <h3>OpenAI SDK (Python)</h3>
+            <p>
+              The official Python SDK requires no modifications other than
+              instantiating the client with our base URL and key.
+            </p>
+            <div class="code-block">
+              <div class="code-header">
+                <span>python</span>
+                <button class="copy-btn" onclick="copyCode(this)">
+                  <iconify-icon icon="solar:copy-linear"></iconify-icon> Copy
+                </button>
+              </div>
+              <div class="code-content">
+                <pre><code><span class="token keyword">from</span> openai <span class="token keyword">import</span> OpenAI
+
+client <span class="token keyword">=</span> <span class="token function">OpenAI</span>(
+    base_url<span class="token keyword">=</span><span class="token string">"https://api.lightweight.one/v1"</span>,
+    api_key<span class="token keyword">=</span><span class="token string">"lw-your-key-here"</span>
+)
+
+response <span class="token keyword">=</span> client.chat.completions.<span class="token function">create</span>(
+    model<span class="token keyword">=</span><span class="token string">"gpt-5"</span>,
+    messages<span class="token keyword">=</span>[{"role": "user", "content": "Hello!"}]
+)
+<span class="token function">print</span>(response.choices[0].message.content)</code></pre>
+              </div>
+            </div>
+          </div>
+
+          <!-- OpenAI SDK (Node.js) -->
+          <div
+            id="guide-nodejs"
+            class="mt-10 scroll-mt-8 border-t border-border pt-8"
+          >
+            <h3>OpenAI SDK (Node.js)</h3>
+            <p>
+              Similarly, the Node.js/TypeScript SDK natively supports custom
+              base URLs.
+            </p>
+            <div class="code-block">
+              <div class="code-header">
+                <span>typescript</span>
+                <button class="copy-btn" onclick="copyCode(this)">
+                  <iconify-icon icon="solar:copy-linear"></iconify-icon> Copy
+                </button>
+              </div>
+              <div class="code-content">
+                <pre><code><span class="token keyword">import</span> OpenAI <span class="token keyword">from</span> <span class="token string">"openai"</span><span class="token keyword">;</span>
+
+<span class="token keyword">const</span> client <span class="token keyword">=</span> <span class="token keyword">new</span> <span class="token function">OpenAI</span>({
+  baseURL<span class="token keyword">:</span> <span class="token string">"https://api.lightweight.one/v1"</span><span class="token keyword">,</span>
+  apiKey<span class="token keyword">:</span> <span class="token string">"lw-your-key-here"</span><span class="token keyword">,</span>
+})<span class="token keyword">;</span>
+
+<span class="token keyword">async function</span> <span class="token function">main</span>() {
+  <span class="token keyword">const</span> completion <span class="token keyword">=</span> <span class="token keyword">await</span> client.chat.completions.<span class="token function">create</span>({
+    model<span class="token keyword">:</span> <span class="token string">"gpt-4o"</span><span class="token keyword">,</span>
+    messages<span class="token keyword">:</span> [{ role<span class="token keyword">:</span> <span class="token string">"user"</span><span class="token keyword">,</span> content<span class="token keyword">:</span> <span class="token string">"Hello!"</span> }]<span class="token keyword">,</span>
+  })<span class="token keyword">;</span>
+  console.<span class="token function">log</span>(completion.choices[<span class="token number">0</span>].message.content)<span class="token keyword">;</span>
+}
+<span class="token function">main</span>()<span class="token keyword">;</span></code></pre>
+              </div>
+            </div>
+          </div>
+
+          <!-- LangChain -->
+          <div
+            id="guide-langchain"
+            class="mt-10 scroll-mt-8 border-t border-border pt-8"
+          >
+            <h3>LangChain</h3>
+            <p>
+              Use the standard <code>ChatOpenAI</code> class in LangChain,
+              overriding the base URL parameter.
+            </p>
+            <div class="code-block">
+              <div class="code-header">
+                <span>python</span>
+                <button class="copy-btn" onclick="copyCode(this)">
+                  <iconify-icon icon="solar:copy-linear"></iconify-icon> Copy
+                </button>
+              </div>
+              <div class="code-content">
+                <pre><code><span class="token keyword">from</span> langchain_openai <span class="token keyword">import</span> ChatOpenAI
+
+llm <span class="token keyword">=</span> <span class="token function">ChatOpenAI</span>(
+    base_url<span class="token keyword">=</span><span class="token string">"https://api.lightweight.one/v1"</span>,
+    api_key<span class="token keyword">=</span><span class="token string">"lw-your-key-here"</span>,
+    model<span class="token keyword">=</span><span class="token string">"gpt-4.1"</span>
+)
+
+<span class="token function">print</span>(llm.<span class="token function">invoke</span>("Explain quantum entanglement.").content)</code></pre>
+              </div>
+            </div>
+          </div>
+
+          <!-- LiteLLM -->
+          <div
+            id="guide-litellm"
+            class="mt-10 scroll-mt-8 border-t border-border pt-8"
+          >
+            <h3>LiteLLM</h3>
+            <p>
+              When using LiteLLM to proxy requests locally, direct the OpenAI
+              proxy target to Lightweight.
+            </p>
+            <div class="code-block">
+              <div class="code-header">
+                <span>bash</span>
+                <button class="copy-btn" onclick="copyCode(this)">
+                  <iconify-icon icon="solar:copy-linear"></iconify-icon> Copy
+                </button>
+              </div>
+              <div class="code-content">
+                <pre><code><span class="token function">litellm</span> <span class="token attribute">--model</span> openai/gpt-4.1 \
+  <span class="token attribute">--api_base</span> <span class="token string">"https://api.lightweight.one/v1"</span> \
+  <span class="token attribute">--api_key</span> <span class="token string">"lw-your-key-here"</span></code></pre>
+              </div>
+            </div>
+          </div>
+
+          <!-- Generic -->
+          <div
+            id="guide-generic"
+            class="mt-10 scroll-mt-8 border-t border-border pt-8"
+          >
+            <h3>Any OpenAI-Compatible Tool</h3>
+            <p>
+              For any other application that doesn't have an explicit UI
+              setting, environment variables are universally respected by the
+              underlying OpenAI SDKs.
+            </p>
+            <ol>
+              <li>
+                Find where the tool loads its environment variables (e.g., a
+                <code>.env</code> file, a shell script, or system environment
+                settings).
+              </li>
+              <li>Set <code>OPENAI_API_KEY=lw-your-key</code></li>
+              <li>
+                Set <code>OPENAI_BASE_URL=https://api.lightweight.one/v1</code>
+              </li>
+              <li>Restart the application.</li>
+            </ol>
+          </div>
+        </section>
+
+        <!-- Rate Limits -->
+        <section
+          id="rate-limits"
+          class="scroll-mt-8 border-t border-border pt-8"
+        >
+          <h2>Rate Limits</h2>
+          <p>
+            To ensure fair usage across the beta, we enforce RPM (Requests Per
+            Minute) limits based on your account tier. When you exceed the
+            limit, you will receive a
+            <code>429 Too Many Requests</code> response.
+          </p>
+
+          <table>
+            <thead>
+              <tr>
+                <th>Account Tier</th>
+                <th>Requests Per Minute (RPM)</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Beta Access</td>
+                <td>60 RPM</td>
+              </tr>
+              <tr>
+                <td>Pro Tier</td>
+                <td>250 RPM</td>
+              </tr>
+              <tr>
+                <td>Enterprise</td>
+                <td>Custom</td>
+              </tr>
+            </tbody>
+          </table>
+          <p class="text-sm mt-3 text-gray-400">
+            If you hit a rate limit, the response headers will include a
+            <code>Retry-After</code> value indicating how many seconds you
+            should wait before retrying.
+          </p>
+        </section>
+
+        <!-- FAQ -->
+        <section id="faq" class="scroll-mt-8 border-t border-border pt-8">
+          <h2>Frequently Asked Questions</h2>
+
+          <h3 class="text-lg mt-6">What models are available?</h3>
+          <p>
+            We provide unified access to a growing catalog of frontier and open models from leading providers.
+            <a href="#models">See the complete catalog</a> for exact model IDs.
+          </p>
+
+          <h3 class="text-lg mt-6">Is this OpenAI-compatible?</h3>
+          <p>
+            Yes. Lightweight is designed as a drop-in replacement. Any tool,
+            library, or codebase that can talk to OpenAI can talk to Lightweight
+            simply by changing the Base URL and API Key.
+          </p>
+
+          <h3 class="text-lg mt-6">How do I check my usage?</h3>
+          <p>
+            You can use the <a href="dashboard.html">Dashboard</a> UI, or query
+            the <code>GET /v1/usage</code> endpoint programmatically.
+          </p>
+
+          <h3 class="text-lg mt-6">What happens when I hit my limit?</h3>
+          <p>
+            You will receive a <code>403 Forbidden</code> HTTP status code with
+            a clear message indicating your quota has been exhausted.
+          </p>
+
+          <h3 class="text-lg mt-6">Can I use streaming?</h3>
+          <p>
+            Yes. Add <code>"stream": true</code> to your
+            <code>/chat/completions</code> payload. Responses will be streamed
+            using Server-Sent Events (SSE) following the exact OpenAI format.
+          </p>
+
+          <h3 class="text-lg mt-6">How do I get an invite?</h3>
+          <p>
+            Lightweight is currently in an invite-only beta. Reach out in our
+            Discord or community channels to request access.
+          </p>
+
+          
+        </section>
+      </div>
+    </main>
+
+    <script>
+      // Syntax Copy Function
+      function copyCode(button) {
+        const codeBlock = button.closest(".code-block").querySelector("code");
+        const textToCopy = codeBlock.innerText;
+
+        navigator.clipboard.writeText(textToCopy).then(() => {
+          const originalHtml = button.innerHTML;
+          button.innerHTML =
+            '<iconify-icon icon="solar:check-circle-linear" class="text-accent"></iconify-icon> <span class="text-accent">Copied</span>';
+          setTimeout(() => {
+            button.innerHTML = originalHtml;
+          }, 2000);
+        });
+      }
+
+      // Sidebar Active State Tracking
+      document.addEventListener("DOMContentLoaded", () => {
+        const sections = document.querySelectorAll("section");
+        const navLinks = document.querySelectorAll(".sidebar-link");
+        const mainContent = document.getElementById("main-content");
+
+        // Adjust offset for smooth scrolling
+        const observerOptions = {
+          root: mainContent,
+          rootMargin: "-20% 0px -70% 0px",
+          threshold: 0,
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+          entries.forEach((entry) => {
+            if (entry.isIntersecting) {
+              const id =
+                entry.target.getAttribute("id") ||
+                entry.target.parentElement.getAttribute("id");
+
+              // Remove active class from all links
+              navLinks.forEach((link) => {
+                link.classList.remove("active");
+                // Add active class to corresponding link
+                if (link.getAttribute("href") === `#${id}`) {
+                  link.classList.add("active");
+                  // Scroll sidebar to show active link
+                  link.scrollIntoView({ behavior: "smooth", block: "nearest" });
+                }
+              });
+            }
+          });
+        }, observerOptions);
+
+        sections.forEach((section) => {
+          observer.observe(section);
+        });
+
+        // Sub-sections like guides
+        document.querySelectorAll('[id^="guide-"]').forEach((guide) => {
+          observer.observe(guide);
+        });
+
+        // Mobile Menu Toggle
+        const mobileMenuBtn = document.getElementById("mobile-menu-btn");
+        const sidebar = document.getElementById("sidebar");
+        const overlay = document.getElementById("sidebar-overlay");
+
+        function toggleMenu() {
+          sidebar.classList.toggle("open");
+          overlay.classList.toggle("active");
+        }
+
+        mobileMenuBtn.addEventListener("click", toggleMenu);
+        overlay.addEventListener("click", toggleMenu);
+
+        // Close menu when clicking a link on mobile
+        navLinks.forEach((link) => {
+          link.addEventListener("click", () => {
+            if (window.innerWidth < 1024) {
+              toggleMenu();
+            }
+          });
+        });
+      });
+    </script>
+<script>
+  fetch('https://api.lightweight.one/v1/models')
+    .then(r => r.json())
+    .then(d => {
+      const container = document.getElementById('models-table');
+      if (!container || !d.data) return;
+      const providers = {};
+      d.data.forEach(m => {
+        const p = m.id.split('-')[0] || 'other';
+        if (!providers[p]) providers[p] = [];
+        providers[p].push(m);
+      });
+      let html = '<table class="w-full text-sm"><thead><tr class="border-b border-[#333]"><th class="text-left py-2 text-gray-400">Model ID</th><th class="text-left py-2 text-gray-400">Owner</th></tr></thead><tbody>';
+      d.data.sort((a,b) => a.id.localeCompare(b.id)).forEach(m => {
+        html += '<tr class="border-b border-[#222]"><td class="py-2 font-mono text-[#e0e0e0]">' + m.id + '</td><td class="py-2 text-gray-400">' + (m.owned_by || 'lightweight') + '</td></tr>';
+      });
+      html += '</tbody></table>';
+      html += '<p class="text-xs text-gray-500 mt-4">' + d.data.length + ' models available</p>';
+      container.innerHTML = html;
+    })
+    .catch(() => {
+      const container = document.getElementById('models-table');
+      if (container) container.innerHTML = '<p class="text-gray-400">Failed to load models. Try <code>GET /v1/models</code> directly.</p>';
+    });
+</script>
+  </body>
+</html>

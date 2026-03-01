@@ -1,73 +1,1009 @@
-<!doctype html>
-<html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>templarsco</title>
-    <style>
-      body {
-        font-family: system-ui, sans-serif;
-        background: #0d1117;
-        color: #e6edf3;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        min-height: 100vh;
-        margin: 0;
-      }
-      .container {
-        text-align: center;
-        max-width: 600px;
-        padding: 2rem;
-      }
-      h1 {
-        font-size: 2rem;
-        margin-bottom: 0.5rem;
-      }
-      p {
-        color: #8b949e;
-        line-height: 1.6;
-      }
-      a {
-        color: #58a6ff;
-        text-decoration: none;
-      }
-      a:hover {
-        text-decoration: underline;
-      }
-      .links {
-        margin-top: 2rem;
-        display: flex;
-        gap: 1rem;
-        justify-content: center;
-        flex-wrap: wrap;
-      }
-      .links a {
-        background: #21262d;
-        padding: 0.75rem 1.5rem;
-        border-radius: 8px;
-        border: 1px solid #30363d;
-      }
-      .links a:hover {
-        border-color: #58a6ff;
-        background: #161b22;
-      }
-    </style>
-  </head>
-  <body>
-    <div class="container">
-      <h1>templarsco</h1>
-      <p>
-        Open-source AI infrastructure by
-        <a href="https://fantasti.ai">Fantasti Technologies LLC</a>
-      </p>
-      <div class="links">
-        <a href="https://github.com/templarsco/lightweight">Lightweight CLI</a>
-         <a href="/api.json">Models API</a>
-         <a href="https://github.com/templarsco/models.dev-1"
-          >Models Registry</a
-        >
-      </div>
-    </div>
-  </body>
-</html>
+<html lang="en" class="scroll-smooth bg-[#0A0A0A]"><head><meta charset="UTF-8">
+<link rel="icon" href="favicon.svg" type="image/svg+xml">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Lightweight Provider — The Fixed-Price AI API</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<script src="https://code.iconify.design/iconify-icon/1.0.7/iconify-icon.min.js"></script>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500&family=JetBrains+Mono:wght@300;400;500&display=swap');
+:root {
+--accent: #22C55E;
+--bg: #0A0A0A;
+--surface: #111111;
+--border: rgba(255, 255, 255, 0.06);
+--text-primary: #E5E5E5;
+--text-muted: #888888;
+}
+body {
+font-family: 'Inter', sans-serif;
+background-color: var(--bg);
+color: var(--text-primary);
+}
+.font-mono {
+font-family: 'JetBrains Mono', monospace;
+}
+/* Syntax Highlighting Fake Classes */
+.sh-kw { color: #FF7B72; } /* Keywords */
+.sh-str { color: #A5D6FF; } /* Strings */
+.sh-num { color: #79C0FF; } /* Numbers */
+.sh-punc { color: var(--text-muted); } /* Punctuation */
+.sh-func { color: #D2A8FF; } /* Functions */
+.sh-attr { color: #7EE787; } /* Attributes/Keys */
+.sh-comment { color: #8B949E; font-style: italic; }
+/* Custom Scrollbar for code blocks */
+::-webkit-scrollbar {
+width: 8px;
+height: 8px;
+}
+::-webkit-scrollbar-track {
+background: transparent;
+}
+::-webkit-scrollbar-thumb {
+background: rgba(255, 255, 255, 0.1);
+border-radius: 4px;
+}
+::-webkit-scrollbar-thumb:hover {
+background: rgba(255, 255, 255, 0.2);
+}
+/* Typewriter animation for hero */
+@keyframes typing {
+from { width: 0 }
+to { width: 100% }
+}
+.typewriter-line {
+display: inline-block;
+overflow: hidden;
+white-space: nowrap;
+animation: typing 1.5s steps(40, end);
+}
+.glow-text {
+text-shadow: 0 0 20px rgba(34, 197, 94, 0.4);
+}
+/* Hide scrollbar for pricing cards container but keep functionality */
+.hide-scroll::-webkit-scrollbar {
+display: none;
+}
+.hide-scroll {
+-ms-overflow-style: none;
+scrollbar-width: none;
+}
+</style></head>
+<body class="antialiased selection:bg-[#22C55E]/20 selection:text-[#22C55E] flex flex-col min-h-screen">
+
+    <!-- NAVBAR -->
+    <nav class="fixed top-0 w-full z-50 bg-[#0A0A0A]/80 backdrop-blur-md border-b border-white/5">
+        <div class="max-w-[1200px] mx-auto px-6 h-16 flex items-center justify-between">
+            <div class="flex items-center gap-2">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" fill="none" class="w-5 h-5"><path d="M18.5 3L8 17h7l-1.5 12L24 15h-7l1.5-12z" stroke="#22C55E" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                <span class="font-mono text-base tracking-tight font-medium">lightweight.</span>
+            </div>
+            
+            <div class="hidden md:flex items-center gap-8 font-mono text-sm text-[#888888]">
+                <a href="docs.html" class="hover:text-[#E5E5E5] transition-colors">Docs</a>
+                <a href="#pricing" class="hover:text-[#E5E5E5] transition-colors">Pricing</a>
+                <a href="https://github.com/templarsco" target="_blank" class="hover:text-[#E5E5E5] transition-colors flex items-center gap-1.5">
+                    <iconify-icon icon="solar:code-square-linear" stroke-width="1.5"></iconify-icon>
+                    GitHub
+                </a>
+            </div>
+
+            <div class="flex items-center gap-4">
+                <a href="login.html" class="hidden md:flex items-center gap-2 font-mono text-sm text-[#E5E5E5] hover:text-[#22C55E] transition-colors group">
+                    Get API Key 
+                    <iconify-icon icon="solar:arrow-right-linear" class="text-xs group-hover:translate-x-0.5 transition-transform" stroke-width="1.5"></iconify-icon>
+                </a>
+                <button class="md:hidden text-[#E5E5E5]">
+                    <iconify-icon icon="solar:hamburger-menu-linear" class="text-2xl" stroke-width="1.5"></iconify-icon>
+                </button>
+            </div>
+        </div>
+    </nav>
+
+    <!-- SECTION 1: HERO -->
+    <section class="pt-32 pb-24 md:pt-48 md:pb-32 px-6 flex flex-col items-center text-center relative max-w-[1200px] mx-auto w-full">
+        <!-- Subtle background glow -->
+        <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-[#22C55E]/5 rounded-full blur-[120px] pointer-events-none"></div>
+
+        <h1 class="font-mono text-5xl md:text-7xl lg:text-8xl tracking-tighter text-[#E5E5E5] mb-6 relative z-10">
+            One API key.
+        </h1>
+        <p class="text-base md:text-lg text-[#888888] font-light max-w-2xl mx-auto mb-12 tracking-wide relative z-10">
+            Every frontier model. One API. Zero config.
+        </p>
+
+        <!-- Hero Code Block -->
+        <div class="w-full max-w-3xl bg-[#111111] border border-white/5 rounded-[4px] text-left relative z-10 group">
+            <!-- Terminal Header -->
+            <div class="h-10 border-b border-white/5 flex items-center px-4 gap-2 bg-white/[0.02]">
+                <div class="w-2.5 h-2.5 rounded-full bg-white/10"></div>
+                <div class="w-2.5 h-2.5 rounded-full bg-white/10"></div>
+                <div class="w-2.5 h-2.5 rounded-full bg-white/10"></div>
+                <div class="ml-auto text-xs font-mono text-[#888888]">bash</div>
+            </div>
+            <!-- Code Content -->
+            <div class="p-6 font-mono text-sm overflow-x-auto leading-loose">
+<pre class="m-0"><code class="language-bash"><span class="sh-func text-[#22C55E]">curl</span> https://api.lightweight.one/v1/chat/completions \
+  <span class="sh-kw">-H</span> <span class="sh-str">"Authorization: Bearer lw_sk_..."</span> \
+  <span class="sh-kw">-H</span> <span class="sh-str">"Content-Type: application/json"</span> \
+  <span class="sh-kw">-d</span> <span class="sh-str">'{
+    "model": "claude-opus-4.6",
+    "messages": [{"role": "user", "content": "Hello"}]
+  }'</span></code></pre>
+            </div>
+            <button class="absolute top-14 right-4 text-[#888888] hover:text-[#E5E5E5] opacity-0 group-hover:opacity-100 transition-opacity bg-[#111] p-1.5 rounded border border-white/10">
+                <iconify-icon icon="solar:copy-linear" class="text-base" stroke-width="1.5"></iconify-icon>
+            </button>
+        </div>
+
+        <div class="mt-12 flex flex-col sm:flex-row gap-4 relative z-10">
+            <a href="login.html" class="bg-[#22C55E] text-[#0A0A0A] font-mono text-sm px-6 py-3 rounded-[4px] hover:bg-[#22C55E]/90 transition-colors flex items-center justify-center gap-2">
+                Get Free API Key
+            </a>
+            <a href="docs.html" class="bg-transparent border border-white/10 text-[#E5E5E5] font-mono text-sm px-6 py-3 rounded-[4px] hover:border-white/30 hover:bg-white/5 transition-all flex items-center justify-center gap-2">
+                <iconify-icon icon="solar:document-linear" stroke-width="1.5"></iconify-icon>
+                View Documentation
+            </a>
+        </div>
+    </section>
+
+    <!-- SECTION 2: MODELS GRID -->
+    <section class="py-24 px-6 border-t border-white/5 max-w-[1200px] mx-auto w-full">
+        <div class="mb-12">
+            <h2 class="font-mono text-2xl md:text-3xl tracking-tight text-[#E5E5E5]">Every frontier model. Zero config.</h2>
+            <p class="text-sm text-[#888888] font-mono mt-2"><span id="model-count">Loading models...</span> · One API key</p>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+            <!-- Model Cards -->
+            <div class="bg-[#0A0A0A] border border-white/5 p-5 rounded-[4px] hover:border-[#22C55E]/40 transition-colors group flex flex-col justify-between h-32">
+                <div class="flex items-center gap-3">
+                    <iconify-icon icon="simple-icons:openai" class="text-[#888888] group-hover:text-[#22C55E] text-xl transition-colors"></iconify-icon>
+                    <span class="font-sans text-sm font-medium text-[#E5E5E5]">GPT-5.3 Codex</span>
+                </div>
+                <div class="font-mono text-xs text-[#888888]">OpenAI · 128K tokens</div>
+            </div>
+
+            <div class="bg-[#0A0A0A] border border-white/5 p-5 rounded-[4px] hover:border-[#22C55E]/40 transition-colors group flex flex-col justify-between h-32">
+                <div class="flex items-center gap-3">
+                    <iconify-icon icon="simple-icons:anthropic" class="text-[#888888] group-hover:text-[#22C55E] text-xl transition-colors"></iconify-icon>
+                    <span class="font-sans text-sm font-medium text-[#E5E5E5]">Claude Opus 4.6</span>
+                </div>
+                <div class="font-mono text-xs text-[#888888]">Anthropic · 200K tokens</div>
+            </div>
+
+            <div class="bg-[#0A0A0A] border border-white/5 p-5 rounded-[4px] hover:border-[#22C55E]/40 transition-colors group flex flex-col justify-between h-32">
+                <div class="flex items-center gap-3">
+                    <iconify-icon icon="simple-icons:google" class="text-[#888888] group-hover:text-[#22C55E] text-xl transition-colors"></iconify-icon>
+                    <span class="font-sans text-sm font-medium text-[#E5E5E5]">Gemini 3.1 Pro</span>
+                </div>
+                <div class="font-mono text-xs text-[#888888]">Google · 1M tokens</div>
+            </div>
+
+            <div class="bg-[#0A0A0A] border border-white/5 p-5 rounded-[4px] hover:border-[#22C55E]/40 transition-colors group flex flex-col justify-between h-32">
+                <div class="flex items-center gap-3">
+                    <iconify-icon icon="simple-icons:openai" class="text-[#888888] group-hover:text-[#22C55E] text-xl transition-colors"></iconify-icon>
+                    <span class="font-sans text-sm font-medium text-[#E5E5E5]">GPT-5</span>
+                </div>
+                <div class="font-mono text-xs text-[#888888]">OpenAI · 128K tokens</div>
+            </div>
+
+            <div class="bg-[#0A0A0A] border border-white/5 p-5 rounded-[4px] hover:border-[#22C55E]/40 transition-colors group flex flex-col justify-between h-32">
+                <div class="flex items-center gap-3">
+                    <iconify-icon icon="simple-icons:openai" class="text-[#888888] group-hover:text-[#22C55E] text-xl transition-colors"></iconify-icon>
+                    <span class="font-sans text-sm font-medium text-[#E5E5E5]">o3</span>
+                </div>
+                <div class="font-mono text-xs text-[#888888]">OpenAI · 200K tokens</div>
+            </div>
+
+            <div class="bg-[#0A0A0A] border border-white/5 p-5 rounded-[4px] hover:border-[#22C55E]/40 transition-colors group flex flex-col justify-between h-32">
+                <div class="flex items-center gap-3">
+                    <iconify-icon icon="hugeicons:grok" class="text-[#888888] group-hover:text-[#22C55E] text-xl transition-colors"></iconify-icon>
+                    <span class="font-sans text-sm font-medium text-[#E5E5E5]">Grok 3</span>
+                </div>
+                <div class="font-mono text-xs text-[#888888]">xAI · 131K tokens</div>
+            </div>
+
+            <div class="bg-[#0A0A0A] border border-white/5 p-5 rounded-[4px] hover:border-[#22C55E]/40 transition-colors group flex flex-col justify-between h-32">
+                <div class="flex items-center gap-3">
+                    <iconify-icon icon="simple-icons:meta" class="text-[#888888] group-hover:text-[#22C55E] text-xl transition-colors"></iconify-icon>
+                    <span class="font-sans text-sm font-medium text-[#E5E5E5]">Llama 4 Maverick</span>
+                </div>
+                <div class="font-mono text-xs text-[#888888]">Meta · 256K tokens</div>
+            </div>
+
+            <div class="bg-[#0A0A0A] border border-white/5 p-5 rounded-[4px] hover:border-[#22C55E]/40 transition-colors group flex flex-col justify-between h-32">
+                <div class="flex items-center gap-3">
+                    <iconify-icon icon="simple-icons:deepseek" class="text-[#888888] group-hover:text-[#22C55E] text-xl transition-colors"></iconify-icon>
+                    <span class="font-sans text-sm font-medium text-[#E5E5E5]">DeepSeek R1</span>
+                </div>
+                <div class="font-mono text-xs text-[#888888]">DeepSeek · 164K tokens</div>
+            </div>
+
+            <div class="bg-[#0A0A0A] border border-white/5 p-5 rounded-[4px] hover:border-[#22C55E]/40 transition-colors group flex flex-col justify-between h-32">
+                <div class="flex items-center gap-3">
+                    <iconify-icon icon="logos:mistral-ai" class="text-[#888888] group-hover:text-[#22C55E] text-xl transition-colors"></iconify-icon>
+                    <span class="font-sans text-sm font-medium text-[#E5E5E5]">Mistral Large</span>
+                </div>
+                <div class="font-mono text-xs text-[#888888]">Mistral · 128K tokens</div>
+            </div>
+
+            <div class="bg-[#0A0A0A] border border-white/5 p-5 rounded-[4px] hover:border-[#22C55E]/40 transition-colors group flex flex-col justify-between h-32">
+                <div class="flex items-center gap-3">
+                    <iconify-icon icon="simple-icons:microsoft" class="text-[#888888] group-hover:text-[#22C55E] text-xl transition-colors"></iconify-icon>
+                    <span class="font-sans text-sm font-medium text-[#E5E5E5]">Phi-4 Reasoning</span>
+                </div>
+                <div class="font-mono text-xs text-[#888888]">Microsoft · 16K tokens</div>
+            </div>
+
+            <div class="bg-[#0A0A0A] border border-white/5 p-5 rounded-[4px] hover:border-[#22C55E]/40 transition-colors group flex flex-col justify-between h-32">
+                <div class="flex items-center gap-3">
+                    <iconify-icon icon="simple-icons:cohere" class="text-[#888888] group-hover:text-[#22C55E] text-xl transition-colors"></iconify-icon>
+                    <span class="font-sans text-sm font-medium text-[#E5E5E5]">Command R+</span>
+                </div>
+                <div class="font-mono text-xs text-[#888888]">Cohere · 128K tokens</div>
+            </div>
+
+            <div class="bg-[#0A0A0A] border border-[dashed] border-white/10 p-5 rounded-[4px] flex flex-col justify-center items-center h-32 cursor-pointer hover:bg-white/[0.02] transition-colors">
+                <span id="more-models" class="font-mono text-sm text-[#888888]">+ more</span>
+            </div>
+        </div>
+    </section>
+
+    <!-- SECTION 3: HOW IT WORKS -->
+    <section class="py-24 px-6 max-w-[1200px] mx-auto w-full">
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+            <!-- Step 1 -->
+            <div class="flex flex-col">
+                <div class="flex items-baseline gap-3 mb-4">
+                    <span class="font-mono text-sm text-[#22C55E]">01.</span>
+                    <span class="font-mono text-base text-[#E5E5E5]">Get your key</span>
+                </div>
+                <div class="bg-[#111111] border border-white/5 rounded-[4px] p-4 font-mono text-xs text-[#888888] mt-auto">
+                    export OPENAI_API_KEY=<span class="text-[#E5E5E5]">lw_sk_...</span>
+                </div>
+            </div>
+            <!-- Step 2 -->
+            <div class="flex flex-col">
+                <div class="flex items-baseline gap-3 mb-4">
+                    <span class="font-mono text-sm text-[#22C55E]">02.</span>
+                    <span class="font-mono text-base text-[#E5E5E5]">Point any tool</span>
+                </div>
+                <div class="bg-[#111111] border border-white/5 rounded-[4px] p-4 font-mono text-xs text-[#888888] mt-auto overflow-x-auto">
+                    --api-base <span class="text-[#E5E5E5]">https://api.lightweight.one/v1</span>
+                </div>
+            </div>
+            <!-- Step 3 -->
+            <div class="flex flex-col">
+                <div class="flex items-baseline gap-3 mb-4">
+                    <span class="font-mono text-sm text-[#22C55E]">03.</span>
+                    <span class="font-mono text-base text-[#E5E5E5]">Use any model</span>
+                </div>
+                <div class="bg-[#111111] border border-white/5 rounded-[4px] p-4 font-mono text-xs text-[#888888] mt-auto">
+                    model: <span class="text-[#E5E5E5]">claude-opus-4.6</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="mt-16 flex flex-col items-center border-t border-white/5 pt-12">
+            <p class="font-mono text-xs text-[#888888] mb-8 text-center uppercase tracking-widest">Works with any OpenAI-compatible client</p>
+            <div class="flex flex-wrap justify-center gap-x-8 gap-y-4 font-mono text-sm text-[#666666]">
+                <span>OpenCode</span>
+                <span>Aider</span>
+                <span>Cursor</span>
+                <span>Zed</span>
+                <span>Continue</span>
+                <span>Cline</span>
+                <span>Windsurf</span>
+                <span>Ollama</span>
+            </div>
+        </div>
+    </section>
+
+    <!-- SECTION 4: PRICING -->
+    <section id="pricing" class="py-24 px-6 border-y border-white/5 max-w-[1200px] mx-auto w-full relative">
+        <div class="flex flex-col md:flex-row md:items-end justify-between mb-12 gap-6">
+            <div>
+                <h2 class="font-mono text-4xl tracking-tighter text-[#E5E5E5] mb-2">Pricing.</h2>
+                <p class="text-sm text-[#888888] font-mono">Beta-only pricing — slots limited. Prices valid only during beta.</p>
+            </div>
+            
+            <!-- Toggle Switch -->
+            <div class="flex items-center bg-[#111111] border border-white/5 rounded-[4px] p-1 font-mono text-xs w-max">
+                <button id="btn-code" onclick="setPricingView('code')" class="px-4 py-2 rounded-[2px] transition-colors bg-white/10 text-[#E5E5E5]">Code View</button>
+                <button id="btn-cards" onclick="setPricingView('cards')" class="px-4 py-2 rounded-[2px] transition-colors text-[#888888] hover:text-[#E5E5E5]">Card View</button>
+            </div>
+        </div>
+
+        <!-- CODE VIEW (Default) -->
+        <div id="view-code" class="w-full bg-[#111111] border border-white/5 rounded-[4px] overflow-hidden transition-opacity duration-300">
+            <div class="h-10 border-b border-white/5 flex items-center px-4 bg-white/[0.02]">
+                <div class="text-xs font-mono text-[#888888] flex items-center gap-2">
+                    <iconify-icon icon="solar:file-text-linear" stroke-width="1.5"></iconify-icon>
+                    pricing.ts
+                </div>
+            </div>
+            <div class="p-6 md:p-8 font-mono text-sm overflow-x-auto leading-loose">
+<pre class="m-0"><code><span class="sh-comment">// Beta-only pricing — these prices exist only during beta</span>
+<span class="sh-kw">const</span> <span class="text-[#E5E5E5]">plans</span> <span class="sh-punc">=</span> <span class="sh-punc">{</span>
+  <span class="sh-attr">supporter</span><span class="sh-punc">:</span> <span class="sh-punc">{</span> <span class="sh-attr">price</span><span class="sh-punc">:</span> <span class="sh-num">1.0</span><span class="sh-punc">,</span> <span class="sh-attr">tokens</span><span class="sh-punc">:</span> <span class="sh-str">"15M"</span><span class="sh-punc">,</span> <span class="sh-attr">slots</span><span class="sh-punc">:</span> <span class="sh-num">100</span><span class="sh-punc">,</span> <span class="sh-attr">rpm</span><span class="sh-punc">:</span> <span class="sh-num">60</span> <span class="sh-punc">},</span>
+  <span class="sh-attr">patron</span><span class="sh-punc">:</span> <span class="sh-punc">{</span> <span class="sh-attr">price</span><span class="sh-punc">:</span> <span class="sh-num">5.0</span><span class="sh-punc">,</span> <span class="sh-attr">tokens</span><span class="sh-punc">:</span> <span class="sh-str">"50M"</span><span class="sh-punc">,</span> <span class="sh-attr">slots</span><span class="sh-punc">:</span> <span class="sh-num">200</span><span class="sh-punc">,</span> <span class="sh-attr">rpm</span><span class="sh-punc">:</span> <span class="sh-num">150</span> <span class="sh-punc">},</span>
+  <span class="sh-attr">champion</span><span class="sh-punc">:</span> <span class="sh-punc">{</span> <span class="sh-attr">price</span><span class="sh-punc">:</span> <span class="sh-num">10.0</span><span class="sh-punc">,</span> <span class="sh-attr">tokens</span><span class="sh-punc">:</span> <span class="sh-str">"150M"</span><span class="sh-punc">,</span> <span class="sh-attr">slots</span><span class="sh-punc">:</span> <span class="sh-num">300</span><span class="sh-punc">,</span> <span class="sh-attr">rpm</span><span class="sh-punc">:</span> <span class="sh-num">300</span> <span class="sh-punc">},</span>
+  <span class="sh-attr">legend</span><span class="sh-punc">:</span> <span class="sh-punc">{</span> <span class="sh-attr">price</span><span class="sh-punc">:</span> <span class="sh-num">15.0</span><span class="sh-punc">,</span> <span class="sh-attr">tokens</span><span class="sh-punc">:</span> <span class="sh-str">"500M"</span><span class="sh-punc">,</span> <span class="sh-attr">slots</span><span class="sh-punc">:</span> <span class="sh-num">500</span><span class="sh-punc">,</span> <span class="sh-attr">rpm</span><span class="sh-punc">:</span> <span class="sh-num">600</span> <span class="sh-punc">},</span>  <span class="sh-comment">// ≈ Claude Max ($200/mo)</span>
+  <span class="sh-attr">core</span><span class="sh-punc">:</span> <span class="sh-punc">{</span> <span class="sh-attr">price</span><span class="sh-punc">:</span> <span class="sh-num">50.0</span><span class="sh-punc">,</span> <span class="sh-attr">tokens</span><span class="sh-punc">:</span> <span class="sh-str">"1B"</span><span class="sh-punc">,</span> <span class="sh-attr">rpm</span><span class="sh-punc">:</span> <span class="sh-num">1000</span> <span class="sh-punc">},</span>  <span class="sh-comment">// ~20× Claude Max value</span>
+  <span class="sh-attr">ultra</span><span class="sh-punc">:</span> <span class="sh-punc">{</span> <span class="sh-attr">price</span><span class="sh-punc">:</span> <span class="sh-num">100.0</span><span class="sh-punc">,</span> <span class="sh-attr">tokens</span><span class="sh-punc">:</span> <span class="sh-str">"3B"</span><span class="sh-punc">,</span> <span class="sh-attr">rpm</span><span class="sh-punc">:</span> <span class="sh-num">1500</span> <span class="sh-punc">},</span>
+  <span class="sh-attr">titan</span><span class="sh-punc">:</span> <span class="sh-punc">{</span> <span class="sh-attr">price</span><span class="sh-punc">:</span> <span class="sh-num">200.0</span><span class="sh-punc">,</span> <span class="sh-attr">tokens</span><span class="sh-punc">:</span> <span class="sh-str">"10B"</span><span class="sh-punc">,</span> <span class="sh-attr">rpm</span><span class="sh-punc">:</span> <span class="sh-num">2000</span> <span class="sh-punc">},</span>
+<span class="sh-punc">}</span> <span class="sh-kw">as const</span></code></pre>
+            </div>
+        </div>
+
+        <!-- CARD VIEW (Hidden by default) -->
+        <div id="view-cards" class="hidden w-full transition-opacity duration-300">
+
+            <!-- For Everyone -->
+            <div class="mb-4 flex items-center gap-4">
+                <div class="h-px flex-1 bg-white/5"></div>
+                <span class="font-mono text-xs text-[#888888] uppercase tracking-widest">For Everyone</span>
+                <div class="h-px flex-1 bg-white/5"></div>
+            </div>
+            <div class="flex overflow-x-auto pb-8 hide-scroll gap-4 snap-x">
+                <!-- Supporter -->
+                <div class="min-w-[280px] md:min-w-0 md:flex-1 bg-[#0A0A0A] border border-white/5 rounded-[4px] p-6 snap-center flex flex-col">
+                    <div class="font-mono text-sm text-[#888888] mb-1">supporter</div>
+                    <div class="font-mono text-[10px] text-[#22C55E] mb-2">87/100 slots · <span class="text-amber-400">GitHub verified</span></div>
+                    <div class="font-mono text-3xl text-[#E5E5E5] tracking-tight mb-6">$1<span class="text-sm text-[#666] tracking-normal">/mo</span></div>
+                    <ul class="font-mono text-xs text-[#888888] space-y-3 mb-8 flex-1">
+                        <li class="flex items-center gap-2"><iconify-icon icon="solar:check-read-linear" class="text-[#22C55E]"></iconify-icon> 15M tokens/mo</li>
+                        <li class="flex items-center gap-2"><iconify-icon icon="solar:check-read-linear" class="text-[#22C55E]"></iconify-icon> 60 RPM</li>
+                        <li class="flex items-center gap-2"><iconify-icon icon="solar:check-read-linear" class="text-[#22C55E]"></iconify-icon> 1.5× Claude Pro</li>
+                    </ul>
+                    <a href="login.html" class="block w-full bg-[#111] border border-white/10 text-xs font-mono py-2 rounded-[2px] hover:bg-white/5 transition-colors text-center text-[#E5E5E5]">Join Beta</a>
+                </div>
+
+                <!-- Patron (anchor tier) -->
+                <div class="min-w-[280px] md:min-w-0 md:flex-1 bg-[#0A0A0A] border border-[#22C55E]/30 rounded-[4px] p-6 snap-center flex flex-col relative overflow-hidden">
+                    <div class="absolute top-0 left-0 w-full h-1 bg-[#22C55E]"></div>
+                    <div class="font-mono text-sm text-[#22C55E] mb-1">patron</div>
+                    <div class="font-mono text-[10px] text-[#22C55E] mb-2">156/200 slots</div>
+                    <div class="font-mono text-3xl text-[#E5E5E5] tracking-tight mb-6">$5<span class="text-sm text-[#666] tracking-normal">/mo</span></div>
+                    <ul class="font-mono text-xs text-[#888888] space-y-3 mb-8 flex-1">
+                        <li class="flex items-center gap-2"><iconify-icon icon="solar:check-read-linear" class="text-[#22C55E]"></iconify-icon> 50M tokens/mo</li>
+                        <li class="flex items-center gap-2"><iconify-icon icon="solar:check-read-linear" class="text-[#22C55E]"></iconify-icon> 150 RPM</li>
+                        <li class="flex items-center gap-2"><iconify-icon icon="solar:check-read-linear" class="text-[#22C55E]"></iconify-icon> 5× Claude Pro</li>
+                        <li class="flex items-center gap-2"><iconify-icon icon="solar:check-read-linear" class="text-[#22C55E]"></iconify-icon> Priority routing</li>
+                    </ul>
+                    <a href="login.html" class="block w-full bg-[#22C55E] text-[#0A0A0A] text-xs font-mono py-2 rounded-[2px] hover:bg-[#22C55E]/90 transition-colors text-center">Join Beta</a>
+                </div>
+
+                <!-- Champion -->
+                <div class="min-w-[280px] md:min-w-0 md:flex-1 bg-[#0A0A0A] border border-white/5 rounded-[4px] p-6 snap-center flex flex-col">
+                    <div class="font-mono text-sm text-[#888888] mb-1">champion</div>
+                    <div class="font-mono text-[10px] text-[#22C55E] mb-2">241/300 slots</div>
+                    <div class="font-mono text-3xl text-[#E5E5E5] tracking-tight mb-6">$10<span class="text-sm text-[#666] tracking-normal">/mo</span></div>
+                    <ul class="font-mono text-xs text-[#888888] space-y-3 mb-8 flex-1">
+                        <li class="flex items-center gap-2"><iconify-icon icon="solar:check-read-linear" class="text-[#22C55E]"></iconify-icon> 150M tokens/mo</li>
+                        <li class="flex items-center gap-2"><iconify-icon icon="solar:check-read-linear" class="text-[#22C55E]"></iconify-icon> 300 RPM</li>
+                        <li class="flex items-center gap-2"><iconify-icon icon="solar:check-read-linear" class="text-[#22C55E]"></iconify-icon> 15× Claude Pro</li>
+                        <li class="flex items-center gap-2"><iconify-icon icon="solar:check-read-linear" class="text-[#22C55E]"></iconify-icon> Early access</li>
+                    </ul>
+                    <a href="login.html" class="block w-full bg-[#111] border border-white/10 text-xs font-mono py-2 rounded-[2px] hover:bg-white/5 transition-colors text-center text-[#E5E5E5]">Join Beta</a>
+                </div>
+
+                <!-- Legend -->
+                <div class="min-w-[280px] md:min-w-0 md:flex-1 bg-[#0A0A0A] border border-white/5 rounded-[4px] p-6 snap-center flex flex-col">
+                    <div class="font-mono text-sm text-[#888888] mb-1">legend <span class="text-[10px] bg-[#22C55E]/10 text-[#22C55E] px-1.5 py-0.5 rounded-[2px] ml-1">≈ Claude Max</span></div>
+                    <div class="font-mono text-[10px] text-[#22C55E] mb-2">412/500 slots</div>
+                    <div class="font-mono text-3xl text-[#E5E5E5] tracking-tight mb-6">$15<span class="text-sm text-[#666] tracking-normal">/mo</span></div>
+                    <ul class="font-mono text-xs text-[#888888] space-y-3 mb-8 flex-1">
+                        <li class="flex items-center gap-2"><iconify-icon icon="solar:check-read-linear" class="text-[#22C55E]"></iconify-icon> 500M tokens/mo</li>
+                        <li class="flex items-center gap-2"><iconify-icon icon="solar:check-read-linear" class="text-[#22C55E]"></iconify-icon> 600 RPM</li>
+                        <li class="flex items-center gap-2"><iconify-icon icon="solar:check-read-linear" class="text-[#22C55E]"></iconify-icon> 50× Claude Pro</li>
+                        <li class="flex items-center gap-2"><iconify-icon icon="solar:check-read-linear" class="text-[#22C55E]"></iconify-icon> Early access</li>
+                    </ul>
+                    <a href="login.html" class="block w-full bg-[#111] border border-white/10 text-xs font-mono py-2 rounded-[2px] hover:bg-white/5 transition-colors text-center text-[#E5E5E5]">Join Beta</a>
+                </div>
+            </div>
+
+            <!-- For Developers -->
+            <div class="mt-8 mb-4 flex items-center gap-4">
+                <div class="h-px flex-1 bg-white/5"></div>
+                <span class="font-mono text-xs text-[#888888] uppercase tracking-widest">For Developers · Complex projects · 1B+ tokens</span>
+                <div class="h-px flex-1 bg-white/5"></div>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                <!-- Core (Dev Entry Point) -->
+                <div class="bg-[#0A0A0A] border border-blue-500/20 rounded-[4px] p-6 flex flex-col relative overflow-hidden">
+                    <div class="absolute top-0 left-0 w-full h-px bg-gradient-to-r from-transparent via-blue-500/40 to-transparent"></div>
+                    <div class="font-mono text-sm text-blue-400 mb-1">core <span class="text-[10px] bg-blue-500/10 text-blue-300 px-1.5 py-0.5 rounded-[2px] ml-1">Dev Entry</span> <span class="text-[10px] bg-emerald-500/10 text-emerald-300 px-1.5 py-0.5 rounded-[2px] ml-1">~20× Claude Max</span></div>
+                    <div class="font-mono text-3xl text-[#E5E5E5] tracking-tight mb-6">$50<span class="text-sm text-[#666] tracking-normal">/mo</span></div>
+                    <ul class="font-mono text-xs text-[#888888] space-y-3 mb-8 flex-1">
+                        <li class="flex items-center gap-2"><iconify-icon icon="solar:check-read-linear" class="text-blue-400"></iconify-icon> 1B tokens/mo</li>
+                        <li class="flex items-center gap-2"><iconify-icon icon="solar:check-read-linear" class="text-blue-400"></iconify-icon> 1,000 RPM</li>
+                        <li class="flex items-center gap-2"><iconify-icon icon="solar:check-read-linear" class="text-blue-400"></iconify-icon> All models + preview</li>
+                        <li class="flex items-center gap-2"><iconify-icon icon="solar:check-read-linear" class="text-blue-400"></iconify-icon> Priority routing</li>
+                    </ul>
+                    <a href="login.html" class="block w-full bg-blue-500/10 border border-blue-500/30 text-blue-400 text-xs font-mono py-2 rounded-[2px] hover:bg-blue-500/20 transition-colors text-center">Get Started</a>
+                </div>
+
+                <!-- Ultra -->
+                <div class="bg-[#0A0A0A] border border-blue-500/20 rounded-[4px] p-6 flex flex-col">
+                    <div class="font-mono text-sm text-blue-400 mb-1">ultra <span class="text-[10px] bg-emerald-500/10 text-emerald-300 px-1.5 py-0.5 rounded-[2px] ml-1">~30× Claude Max</span></div>
+                    <div class="font-mono text-3xl text-[#E5E5E5] tracking-tight mb-6">$100<span class="text-sm text-[#666] tracking-normal">/mo</span></div>
+                    <ul class="font-mono text-xs text-[#888888] space-y-3 mb-8 flex-1">
+                        <li class="flex items-center gap-2"><iconify-icon icon="solar:check-read-linear" class="text-blue-400"></iconify-icon> 3B tokens/mo</li>
+                        <li class="flex items-center gap-2"><iconify-icon icon="solar:check-read-linear" class="text-blue-400"></iconify-icon> 1,500 RPM</li>
+                        <li class="flex items-center gap-2"><iconify-icon icon="solar:check-read-linear" class="text-blue-400"></iconify-icon> All models + preview</li>
+                        <li class="flex items-center gap-2"><iconify-icon icon="solar:check-read-linear" class="text-blue-400"></iconify-icon> Priority routing</li>
+                    </ul>
+                    <a href="login.html" class="block w-full bg-blue-500/10 border border-blue-500/30 text-blue-400 text-xs font-mono py-2 rounded-[2px] hover:bg-blue-500/20 transition-colors text-center">Get Started</a>
+                </div>
+
+                <!-- Titan -->
+                <div class="bg-[#0A0A0A] border border-blue-500/20 rounded-[4px] p-6 flex flex-col">
+                    <div class="font-mono text-sm text-blue-400 mb-1">titan <span class="text-[10px] bg-emerald-500/10 text-emerald-300 px-1.5 py-0.5 rounded-[2px] ml-1">~50× Claude Max</span></div>
+                    <div class="font-mono text-3xl text-[#E5E5E5] tracking-tight mb-6">$200<span class="text-sm text-[#666] tracking-normal">/mo</span></div>
+                    <ul class="font-mono text-xs text-[#888888] space-y-3 mb-8 flex-1">
+                        <li class="flex items-center gap-2"><iconify-icon icon="solar:check-read-linear" class="text-blue-400"></iconify-icon> 10B tokens/mo</li>
+                        <li class="flex items-center gap-2"><iconify-icon icon="solar:check-read-linear" class="text-blue-400"></iconify-icon> 2,000 RPM</li>
+                        <li class="flex items-center gap-2"><iconify-icon icon="solar:check-read-linear" class="text-blue-400"></iconify-icon> All models + preview</li>
+                        <li class="flex items-center gap-2"><iconify-icon icon="solar:check-read-linear" class="text-blue-400"></iconify-icon> SLA guarantee</li>
+                    </ul>
+                    <a href="login.html" class="block w-full bg-blue-500/10 border border-blue-500/30 text-blue-400 text-xs font-mono py-2 rounded-[2px] hover:bg-blue-500/20 transition-colors text-center">Get Started</a>
+                </div>
+            </div>
+
+        </div>
+
+        <script>
+            function setPricingView(view) {
+                const codeView = document.getElementById('view-code');
+                const cardsView = document.getElementById('view-cards');
+                const btnCode = document.getElementById('btn-code');
+                const btnCards = document.getElementById('btn-cards');
+
+                if (view === 'code') {
+                    codeView.classList.remove('hidden');
+                    cardsView.classList.add('hidden');
+                    btnCode.className = 'px-4 py-2 rounded-[2px] transition-colors bg-white/10 text-[#E5E5E5]';
+                    btnCards.className = 'px-4 py-2 rounded-[2px] transition-colors text-[#888888] hover:text-[#E5E5E5]';
+                } else {
+                    codeView.classList.add('hidden');
+                    cardsView.classList.remove('hidden');
+                    btnCode.className = 'px-4 py-2 rounded-[2px] transition-colors text-[#888888] hover:text-[#E5E5E5]';
+                    btnCards.className = 'px-4 py-2 rounded-[2px] transition-colors bg-white/10 text-[#E5E5E5]';
+                }
+            }
+        </script>
+
+        <!-- Callouts & Special Tiers -->
+        <div class="mt-12 grid grid-cols-1 lg:grid-cols-2 gap-8 items-start">
+            
+            <!-- Left Side: Comparisons & Text -->
+            <div class="flex flex-col gap-8">
+                <!-- Comparison -->
+                <div class="bg-[#111111] border border-white/5 rounded-[4px] p-6 font-mono text-sm">
+                    <p class="text-[#E5E5E5] mb-3">"Claude Max costs $200/mo for ~200M tokens."</p>
+                    <p class="text-[#22C55E] mb-4 text-xs">Our Legend tier: 500M tokens for $15/mo — 2.5× more, 1/13th the price.</p>
+                    <div class="h-px bg-white/5 my-4"></div>
+                    <p class="text-[#E5E5E5] mb-3">"Claude Pro gives you ~10M tokens for $20/mo."</p>
+                    <p class="text-[#888888] mb-6 text-xs">Our $1 Supporter tier gives you 15M tokens — 1.5× more for 1/20th the price.</p>
+                    <div class="text-xs text-[#666666] mb-2">What 50M tokens costs elsewhere:</div>
+                    <div class="grid grid-cols-2 gap-2 text-xs">
+                        <div class="text-[#888]">Anthropic API:</div><div class="text-[#E5E5E5] text-right">$2,750/mo</div>
+                        <div class="text-[#888]">Claude Max (5×):</div><div class="text-[#E5E5E5] text-right">$1,000/mo</div>
+                        <div class="text-[#22C55E] mt-2 border-t border-white/5 pt-2">Us (Patron):</div><div class="text-[#22C55E] mt-2 border-t border-white/5 pt-2 text-right">$5/mo</div>
+                    </div>
+                </div>
+
+                <!-- Anti-Frustration -->
+                <div class="bg-[#111111] border border-white/5 rounded-[4px] p-6 font-mono text-sm">
+                    <p class="text-[#E5E5E5] mb-2">Your tokens are yours. No surprise cutoffs.</p>
+                    <p class="font-sans text-xs text-[#888888] leading-relaxed">Other providers charge $200/mo and still cut you off mid-prompt. You can't finish your thought, your refactor dies halfway, your context vanishes. We don't do that. Every token in your plan is yours to use — no invisible walls, no degraded responses, no "please upgrade" mid-conversation. You finish what you started.</p>
+                </div>
+            </div>
+
+            <!-- Right Side: Special Tiers & Callouts -->
+            <div class="flex flex-col gap-4">
+                <!-- Developer Message -->
+                <div class="border border-blue-500/10 bg-blue-500/5 rounded-[4px] p-4">
+                    <div class="font-mono text-sm text-blue-400 mb-1">Complex projects eat 1B+ tokens fast.</div>
+                    <div class="font-sans text-xs text-[#888888]">Long codebases, multi-file refactors, deep reasoning — we get it. Core ($50) is where serious dev work starts. We're here to help you ship, not bill you into oblivion.</div>
+                </div>
+                
+                <div class="border border-amber-500/20 bg-amber-500/5 rounded-[4px] p-4 flex justify-between items-center">
+                    <div>
+                        <div class="font-mono text-sm text-amber-400 mb-1 flex items-center gap-2">OG <span class="text-[10px] bg-amber-500/10 border border-amber-500/20 px-1.5 py-0.5 rounded-[2px] tracking-wider">🏆 INHERITED</span></div>
+                        <div class="font-sans text-xs text-[#888888]">Early testers get 2× tokens on any plan. Forever. Can't be bought.</div>
+                    </div>
+                </div>
+                
+                <div class="border border-white/5 bg-[#0A0A0A] rounded-[4px] p-4 flex justify-between items-center opacity-70">
+                    <div>
+                        <div class="font-mono text-sm text-[#E5E5E5] mb-1 flex items-center gap-2">Founders <span class="text-[#888]">($1,000)</span> <span class="text-[10px] bg-white/10 px-1.5 py-0.5 rounded-[2px] tracking-wider">🔒 LOCKED</span></div>
+                        <div class="font-sans text-xs text-[#888888]">100 seats. Once they're gone, they're gone forever.</div>
+                    </div>
+                </div>
+                
+                <div class="border border-white/5 bg-[#0A0A0A] rounded-[4px] p-4 flex justify-between items-center opacity-70">
+                    <div>
+                        <div class="font-mono text-sm text-[#E5E5E5] mb-1 flex items-center gap-2">Frontiers <span class="text-[#888]">($5,000)</span> <span class="text-[10px] bg-white/10 px-1.5 py-0.5 rounded-[2px] tracking-wider">🔒 LOCKED</span></div>
+                        <div class="font-sans text-xs text-[#888888]">Unlimited tokens. Unlimited RPM. The final frontier.</div>
+                    </div>
+                </div>
+                
+                <div class="border border-white/5 bg-[#0A0A0A] rounded-[4px] p-4 flex justify-between items-center">
+                    <div>
+                        <div class="font-mono text-sm text-[#E5E5E5] mb-1">BYOK <span class="text-[#888]">(Free)</span></div>
+                        <div class="font-sans text-xs text-[#888888]">Bring your own API keys. We just route.</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- SECTION 5: THE MATH -->
+    <section class="py-32 w-full bg-[#050505] relative overflow-hidden border-b border-white/5">
+        <!-- Subtle grid background -->
+        <div class="absolute inset-0 opacity-[0.03]" style="background-image: radial-gradient(circle at center, #ffffff 1px, transparent 1px); background-size: 32px 32px;"></div>
+        
+        <div class="max-w-[1200px] mx-auto px-6 relative z-10 text-center">
+            <h2 class="font-mono text-4xl md:text-5xl tracking-tighter text-[#E5E5E5] mb-20">The math doesn't lie.</h2>
+
+            <div class="flex flex-col md:flex-row items-center justify-center gap-12 md:gap-24 font-mono">
+                
+                <!-- Left: Muted/Reddish context -->
+                <div class="flex flex-col items-center opacity-50 grayscale">
+                    <span class="text-xs text-[#888888] uppercase tracking-widest mb-4">50M tokens on Anthropic API</span>
+                    <span class="text-5xl md:text-6xl tracking-tighter text-[#E5E5E5] strike-through relative">
+                        $2,750<span class="text-xl text-[#888]">/mo</span>
+                    </span>
+                </div>
+
+                <!-- Divider -->
+                <div class="hidden md:block w-px h-24 bg-white/10"></div>
+                <div class="md:hidden h-px w-24 bg-white/10"></div>
+
+                <!-- Right: Accent/Glowing context -->
+                <div class="flex flex-col items-center">
+                    <span class="text-xs text-[#22C55E] uppercase tracking-widest mb-4">50M tokens on Lightweight</span>
+                    <span class="text-5xl md:text-6xl tracking-tighter text-[#22C55E] glow-text">
+                        $5<span class="text-xl text-[#22C55E]/70">/mo</span>
+                    </span>
+                </div>
+
+            </div>
+
+            <p class="mt-16 text-sm text-[#888888] font-mono border border-white/5 inline-block px-4 py-2 rounded-[2px] bg-[#111]">That's 550× more value per dollar.</p>
+        </div>
+    </section>
+
+    <!-- SECTION 5B: WHAT YOU CAN BUILD -->
+    <section class="py-24 px-6 max-w-[1200px] mx-auto w-full border-b border-white/5">
+        <h2 class="font-mono text-2xl md:text-3xl tracking-tight text-[#E5E5E5] mb-4 text-center">What can you build?</h2>
+        <p class="text-sm text-[#888888] font-mono text-center mb-16">Every tier unlocks real work. Here's what your tokens actually get you.</p>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+            <!-- Supporter -->
+            <div class="border border-white/5 bg-[#0A0A0A] rounded-[4px] p-5">
+                <div class="font-mono text-xs text-emerald-400 mb-1">Supporter · 15M tokens</div>
+                <div class="font-mono text-lg text-[#E5E5E5] mb-3">$1<span class="text-xs text-[#888]">/mo</span></div>
+                <ul class="text-xs text-[#888888] font-sans space-y-1.5">
+                    <li>✓ Small scripts &amp; quick prototypes</li>
+                    <li>✓ Learning &amp; experimentation</li>
+                    <li>✓ Code reviews &amp; explanations</li>
+                    <li>✓ ~150 long coding sessions</li>
+                </ul>
+            </div>
+            <!-- Patron -->
+            <div class="border border-white/5 bg-[#0A0A0A] rounded-[4px] p-5">
+                <div class="font-mono text-xs text-emerald-400 mb-1">Patron · 50M tokens</div>
+                <div class="font-mono text-lg text-[#E5E5E5] mb-3">$5<span class="text-xs text-[#888]">/mo</span></div>
+                <ul class="text-xs text-[#888888] font-sans space-y-1.5">
+                    <li>✓ Personal projects &amp; side projects</li>
+                    <li>✓ Small apps (CRUD, APIs, CLIs)</li>
+                    <li>✓ Freelance client work</li>
+                    <li>✓ ~500 long coding sessions</li>
+                </ul>
+            </div>
+            <!-- Champion -->
+            <div class="border border-white/5 bg-[#0A0A0A] rounded-[4px] p-5">
+                <div class="font-mono text-xs text-emerald-400 mb-1">Champion · 150M tokens</div>
+                <div class="font-mono text-lg text-[#E5E5E5] mb-3">$10<span class="text-xs text-[#888]">/mo</span></div>
+                <ul class="text-xs text-[#888888] font-sans space-y-1.5">
+                    <li>✓ Medium apps &amp; multiple repos</li>
+                    <li>✓ Full-stack development</li>
+                    <li>✓ Startup MVPs &amp; team projects</li>
+                    <li>✓ ~1,500 long coding sessions</li>
+                </ul>
+            </div>
+            <!-- Legend -->
+            <div class="border border-emerald-500/20 bg-[#0A0A0A] rounded-[4px] p-5">
+                <div class="font-mono text-xs text-emerald-400 mb-1">Legend · 500M tokens <span class="text-[10px] bg-emerald-500/10 px-1 py-0.5 rounded-[2px]">≈ Claude Max</span></div>
+                <div class="font-mono text-lg text-[#E5E5E5] mb-3">$15<span class="text-xs text-[#888]">/mo</span></div>
+                <ul class="text-xs text-[#888888] font-sans space-y-1.5">
+                    <li>✓ Large codebases &amp; monorepos</li>
+                    <li>✓ Complex architectures</li>
+                    <li>✓ Daily heavy usage, all models</li>
+                    <li>✓ ~5,000 long coding sessions</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- Developer tiers -->
+        <div class="mt-8 grid grid-cols-1 md:grid-cols-3 gap-4">
+            <!-- Core -->
+            <div class="border border-blue-500/20 bg-[#0A0A0A] rounded-[4px] p-5">
+                <div class="font-mono text-xs text-blue-400 mb-1">Core · 1B tokens <span class="text-[10px] bg-emerald-500/10 text-emerald-300 px-1 py-0.5 rounded-[2px]">~20× Claude Max</span></div>
+                <div class="font-mono text-lg text-[#E5E5E5] mb-3">$50<span class="text-xs text-[#888]">/mo</span></div>
+                <ul class="text-xs text-[#888888] font-sans space-y-1.5">
+                    <li>✓ Enterprise apps &amp; microservices</li>
+                    <li>✓ Multi-service architectures</li>
+                    <li>✓ CI/CD integrated AI workflows</li>
+                    <li>✓ ~10,000 long coding sessions</li>
+                </ul>
+            </div>
+            <!-- Ultra -->
+            <div class="border border-blue-500/20 bg-[#0A0A0A] rounded-[4px] p-5">
+                <div class="font-mono text-xs text-blue-400 mb-1">Ultra · 3B tokens <span class="text-[10px] bg-emerald-500/10 text-emerald-300 px-1 py-0.5 rounded-[2px]">~30× Claude Max</span></div>
+                <div class="font-mono text-lg text-[#E5E5E5] mb-3">$100<span class="text-xs text-[#888]">/mo</span></div>
+                <ul class="text-xs text-[#888888] font-sans space-y-1.5">
+                    <li>✓ Complex platforms &amp; AI-heavy apps</li>
+                    <li>✓ Continuous development teams</li>
+                    <li>✓ Agency-scale multi-project work</li>
+                    <li>✓ ~30,000 long coding sessions</li>
+                </ul>
+            </div>
+            <!-- Titan -->
+            <div class="border border-blue-500/20 bg-[#0A0A0A] rounded-[4px] p-5">
+                <div class="font-mono text-xs text-blue-400 mb-1">Titan · 10B tokens <span class="text-[10px] bg-emerald-500/10 text-emerald-300 px-1 py-0.5 rounded-[2px]">~50× Claude Max</span></div>
+                <div class="font-mono text-lg text-[#E5E5E5] mb-3">$200<span class="text-xs text-[#888]">/mo</span></div>
+                <ul class="text-xs text-[#888888] font-sans space-y-1.5">
+                    <li>✓ Massive codebases (millions of LoC)</li>
+                    <li>✓ Multiple teams, multiple projects</li>
+                    <li>✓ 24/7 automated AI pipelines</li>
+                    <li>✓ ~100,000 long coding sessions</li>
+                </ul>
+            </div>
+        </div>
+    </section>
+
+    <!-- SECTION 5C: TOKEN CONSUMPTION -->
+    <section class="py-24 px-6 max-w-[1200px] mx-auto w-full border-b border-white/5">
+        <h2 class="font-mono text-2xl md:text-3xl tracking-tight text-[#E5E5E5] mb-4 text-center">How tokens are spent</h2>
+        <p class="text-sm text-[#888888] font-mono text-center mb-4">Every request uses tokens. Bigger models use more. Here's what to expect.</p>
+
+        <!-- Typical operations table -->
+        <div class="overflow-x-auto mb-12">
+            <table class="w-full font-mono text-xs border border-white/5">
+                <thead>
+                    <tr class="border-b border-white/5 bg-[#111]">
+                        <th class="text-left py-3 px-4 text-[#888888] font-normal">Operation</th>
+                        <th class="text-right py-3 px-4 text-[#888888] font-normal">Avg tokens</th>
+                        <th class="text-right py-3 px-4 text-[#888888] font-normal">On Supporter (15M)</th>
+                        <th class="text-right py-3 px-4 text-[#888888] font-normal">On Legend (500M)</th>
+                        <th class="text-right py-3 px-4 text-[#888888] font-normal">On Core (1B)</th>
+                    </tr>
+                </thead>
+                <tbody class="text-[#E5E5E5]">
+                    <tr class="border-b border-white/5">
+                        <td class="py-3 px-4 text-[#888888]">Explain a function</td>
+                        <td class="text-right py-3 px-4">~2K</td>
+                        <td class="text-right py-3 px-4 text-emerald-400">7,500×</td>
+                        <td class="text-right py-3 px-4 text-emerald-400">250,000×</td>
+                        <td class="text-right py-3 px-4 text-blue-400">500,000×</td>
+                    </tr>
+                    <tr class="border-b border-white/5">
+                        <td class="py-3 px-4 text-[#888888]">Generate a component</td>
+                        <td class="text-right py-3 px-4">~5K</td>
+                        <td class="text-right py-3 px-4 text-emerald-400">3,000×</td>
+                        <td class="text-right py-3 px-4 text-emerald-400">100,000×</td>
+                        <td class="text-right py-3 px-4 text-blue-400">200,000×</td>
+                    </tr>
+                    <tr class="border-b border-white/5">
+                        <td class="py-3 px-4 text-[#888888]">Refactor a file</td>
+                        <td class="text-right py-3 px-4">~10K</td>
+                        <td class="text-right py-3 px-4 text-emerald-400">1,500×</td>
+                        <td class="text-right py-3 px-4 text-emerald-400">50,000×</td>
+                        <td class="text-right py-3 px-4 text-blue-400">100,000×</td>
+                    </tr>
+                    <tr class="border-b border-white/5">
+                        <td class="py-3 px-4 text-[#888888]">Long coding session (w/ context)</td>
+                        <td class="text-right py-3 px-4">~100K</td>
+                        <td class="text-right py-3 px-4 text-emerald-400">150×</td>
+                        <td class="text-right py-3 px-4 text-emerald-400">5,000×</td>
+                        <td class="text-right py-3 px-4 text-blue-400">10,000×</td>
+                    </tr>
+                    <tr>
+                        <td class="py-3 px-4 text-[#888888]">Full codebase review</td>
+                        <td class="text-right py-3 px-4">~500K</td>
+                        <td class="text-right py-3 px-4 text-emerald-400">30×</td>
+                        <td class="text-right py-3 px-4 text-emerald-400">1,000×</td>
+                        <td class="text-right py-3 px-4 text-blue-400">2,000×</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <!-- Per-model cost breakdown -->
+        <h3 class="font-mono text-lg text-[#E5E5E5] mb-2 text-center">Cost per model</h3>
+        <p class="text-xs text-[#888888] font-sans text-center mb-2">Heavier models cost more tokens per request. Here's what the top models cost.</p>
+        <p class="text-xs text-[#555555] font-mono text-center mb-8">Prices shown per 1M tokens (input / output)</p>
+
+        <!-- Frontier models -->
+        <p class="font-mono text-[11px] text-emerald-400 mb-2 max-w-[1000px] mx-auto">▸ Frontier</p>
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3 max-w-[1000px] mx-auto mb-6">
+            <div class="border border-white/5 bg-[#0A0A0A] rounded-[4px] p-4">
+                <div class="flex justify-between items-center mb-2">
+                    <div class="font-mono text-xs text-[#E5E5E5] flex items-center gap-2"><iconify-icon icon="simple-icons:anthropic" class="text-sm"></iconify-icon> Claude Opus 4.6</div>
+                    <div class="font-mono text-[10px] text-emerald-400">Frontier</div>
+                </div>
+                <div class="font-mono text-[11px] text-[#888] flex justify-between">
+                    <span>Input: <span class="text-[#E5E5E5]">$5.00</span>/1M</span>
+                    <span>Output: <span class="text-[#E5E5E5]">$25.00</span>/1M</span>
+                </div>
+                <div class="font-mono text-[10px] text-[#555] mt-1">Anthropic's most capable model</div>
+            </div>
+            <div class="border border-white/5 bg-[#0A0A0A] rounded-[4px] p-4">
+                <div class="flex justify-between items-center mb-2">
+                    <div class="font-mono text-xs text-[#E5E5E5] flex items-center gap-2"><iconify-icon icon="simple-icons:openai" class="text-sm"></iconify-icon> GPT-5.3 Codex</div>
+                    <div class="font-mono text-[10px] text-emerald-400">Frontier</div>
+                </div>
+                <div class="font-mono text-[11px] text-[#888] flex justify-between">
+                    <span>Input: <span class="text-[#E5E5E5]">$1.75</span>/1M</span>
+                    <span>Output: <span class="text-[#E5E5E5]">$14.00</span>/1M</span>
+                </div>
+                <div class="font-mono text-[10px] text-[#555] mt-1">OpenAI's latest coding powerhouse</div>
+            </div>
+            <div class="border border-white/5 bg-[#0A0A0A] rounded-[4px] p-4">
+                <div class="flex justify-between items-center mb-2">
+                    <div class="font-mono text-xs text-[#E5E5E5] flex items-center gap-2"><iconify-icon icon="simple-icons:google" class="text-sm"></iconify-icon> Gemini 3.1 Pro</div>
+                    <div class="font-mono text-[10px] text-emerald-400">Frontier</div>
+                </div>
+                <div class="font-mono text-[11px] text-[#888] flex justify-between">
+                    <span>Input: <span class="text-[#E5E5E5]">$2.00</span>/1M</span>
+                    <span>Output: <span class="text-[#E5E5E5]">$12.00</span>/1M</span>
+                </div>
+                <div class="font-mono text-[10px] text-[#555] mt-1">Google's flagship with 1M context</div>
+            </div>
+        </div>
+
+        <!-- Reasoning models -->
+        <p class="font-mono text-[11px] text-blue-400 mb-2 max-w-[1000px] mx-auto">▸ Reasoning</p>
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3 max-w-[1000px] mx-auto mb-6">
+            <div class="border border-white/5 bg-[#0A0A0A] rounded-[4px] p-4">
+                <div class="flex justify-between items-center mb-2">
+                    <div class="font-mono text-xs text-[#E5E5E5] flex items-center gap-2"><iconify-icon icon="simple-icons:openai" class="text-sm"></iconify-icon> o3</div>
+                    <div class="font-mono text-[10px] text-blue-400">Reasoning</div>
+                </div>
+                <div class="font-mono text-[11px] text-[#888] flex justify-between">
+                    <span>Input: <span class="text-[#E5E5E5]">$2.00</span>/1M</span>
+                    <span>Output: <span class="text-[#E5E5E5]">$8.00</span>/1M</span>
+                </div>
+                <div class="font-mono text-[10px] text-[#555] mt-1">Advanced reasoning model</div>
+            </div>
+            <div class="border border-white/5 bg-[#0A0A0A] rounded-[4px] p-4">
+                <div class="flex justify-between items-center mb-2">
+                    <div class="font-mono text-xs text-[#E5E5E5] flex items-center gap-2"><iconify-icon icon="simple-icons:deepseek" class="text-sm"></iconify-icon> DeepSeek R1</div>
+                    <div class="font-mono text-[10px] text-blue-400">Reasoning</div>
+                </div>
+                <div class="font-mono text-[11px] text-[#888] flex justify-between">
+                    <span>Input: <span class="text-[#E5E5E5]">$0.30</span>/1M</span>
+                    <span>Output: <span class="text-[#E5E5E5]">$1.20</span>/1M</span>
+                </div>
+                <div class="font-mono text-[10px] text-[#555] mt-1">Deep reasoning, chain-of-thought</div>
+            </div>
+            <div class="border border-white/5 bg-[#0A0A0A] rounded-[4px] p-4">
+                <div class="flex justify-between items-center mb-2">
+                    <div class="font-mono text-xs text-[#E5E5E5] flex items-center gap-2"><iconify-icon icon="simple-icons:microsoft" class="text-sm"></iconify-icon> Phi-4 Reasoning</div>
+                    <div class="font-mono text-[10px] text-blue-400">Reasoning</div>
+                </div>
+                <div class="font-mono text-[11px] text-[#888] flex justify-between">
+                    <span>Input: <span class="text-[#E5E5E5]">$0.14</span>/1M</span>
+                    <span>Output: <span class="text-[#E5E5E5]">$0.56</span>/1M</span>
+                </div>
+                <div class="font-mono text-[10px] text-[#555] mt-1">Microsoft's reasoning specialist</div>
+            </div>
+        </div>
+
+        <!-- Efficient models -->
+        <p class="font-mono text-[11px] text-amber-400 mb-2 max-w-[1000px] mx-auto">▸ Efficient</p>
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3 max-w-[1000px] mx-auto mb-6">
+            <div class="border border-white/5 bg-[#0A0A0A] rounded-[4px] p-4">
+                <div class="flex justify-between items-center mb-2">
+                    <div class="font-mono text-xs text-[#E5E5E5] flex items-center gap-2"><iconify-icon icon="simple-icons:openai" class="text-sm"></iconify-icon> GPT-5</div>
+                    <div class="font-mono text-[10px] text-amber-400">Efficient</div>
+                </div>
+                <div class="font-mono text-[11px] text-[#888] flex justify-between">
+                    <span>Input: <span class="text-[#E5E5E5]">$1.25</span>/1M</span>
+                    <span>Output: <span class="text-[#E5E5E5]">$10.00</span>/1M</span>
+                </div>
+                <div class="font-mono text-[10px] text-[#555] mt-1">Most capable general-purpose model</div>
+            </div>
+            <div class="border border-white/5 bg-[#0A0A0A] rounded-[4px] p-4">
+                <div class="flex justify-between items-center mb-2">
+                    <div class="font-mono text-xs text-[#E5E5E5] flex items-center gap-2"><iconify-icon icon="simple-icons:anthropic" class="text-sm"></iconify-icon> Claude Sonnet 4.6</div>
+                    <div class="font-mono text-[10px] text-amber-400">Efficient</div>
+                </div>
+                <div class="font-mono text-[11px] text-[#888] flex justify-between">
+                    <span>Input: <span class="text-[#E5E5E5]">$3.00</span>/1M</span>
+                    <span>Output: <span class="text-[#E5E5E5]">$15.00</span>/1M</span>
+                </div>
+                <div class="font-mono text-[10px] text-[#555] mt-1">Speed meets intelligence</div>
+            </div>
+            <div class="border border-white/5 bg-[#0A0A0A] rounded-[4px] p-4">
+                <div class="flex justify-between items-center mb-2">
+                    <div class="font-mono text-xs text-[#E5E5E5] flex items-center gap-2"><iconify-icon icon="simple-icons:xdotorg" class="text-sm"></iconify-icon> Grok 3</div>
+                    <div class="font-mono text-[10px] text-amber-400">Efficient</div>
+                </div>
+                <div class="font-mono text-[11px] text-[#888] flex justify-between">
+                    <span>Input: <span class="text-[#E5E5E5]">$3.00</span>/1M</span>
+                    <span>Output: <span class="text-[#E5E5E5]">$15.00</span>/1M</span>
+                </div>
+                <div class="font-mono text-[10px] text-[#555] mt-1">xAI's flagship model</div>
+            </div>
+        </div>
+
+        <!-- Compact models -->
+        <p class="font-mono text-[11px] text-sky-400 mb-2 max-w-[1000px] mx-auto">▸ Compact</p>
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3 max-w-[1000px] mx-auto mb-4">
+            <div class="border border-white/5 bg-[#0A0A0A] rounded-[4px] p-4">
+                <div class="flex justify-between items-center mb-2">
+                    <div class="font-mono text-xs text-[#E5E5E5] flex items-center gap-2"><iconify-icon icon="simple-icons:openai" class="text-sm"></iconify-icon> GPT-5-mini</div>
+                    <div class="font-mono text-[10px] text-sky-400">Compact</div>
+                </div>
+                <div class="font-mono text-[11px] text-[#888] flex justify-between">
+                    <span>Input: <span class="text-[#E5E5E5]">$0.25</span>/1M</span>
+                    <span>Output: <span class="text-[#E5E5E5]">$2.00</span>/1M</span>
+                </div>
+                <div class="font-mono text-[10px] text-[#555] mt-1">Fast, affordable, versatile</div>
+            </div>
+            <div class="border border-white/5 bg-[#0A0A0A] rounded-[4px] p-4">
+                <div class="flex justify-between items-center mb-2">
+                    <div class="font-mono text-xs text-[#E5E5E5] flex items-center gap-2"><iconify-icon icon="simple-icons:meta" class="text-sm"></iconify-icon> Llama 4 Maverick</div>
+                    <div class="font-mono text-[10px] text-sky-400">Compact</div>
+                </div>
+                <div class="font-mono text-[11px] text-[#888] flex justify-between">
+                    <span>Input: <span class="text-[#E5E5E5]">$0.15</span>/1M</span>
+                    <span>Output: <span class="text-[#E5E5E5]">$0.60</span>/1M</span>
+                </div>
+                <div class="font-mono text-[10px] text-[#555] mt-1">Open-source with 1M context</div>
+            </div>
+            <div class="border border-white/5 bg-[#0A0A0A] rounded-[4px] p-4">
+                <div class="flex justify-between items-center mb-2">
+                    <div class="font-mono text-xs text-[#E5E5E5] flex items-center gap-2"><iconify-icon icon="simple-icons:mistral" class="text-sm"></iconify-icon> Mistral Medium</div>
+                    <div class="font-mono text-[10px] text-sky-400">Compact</div>
+                </div>
+                <div class="font-mono text-[11px] text-[#888] flex justify-between">
+                    <span>Input: <span class="text-[#E5E5E5]">$0.40</span>/1M</span>
+                    <span>Output: <span class="text-[#E5E5E5]">$2.00</span>/1M</span>
+                </div>
+                <div class="font-mono text-[10px] text-[#555] mt-1">European excellence</div>
+            </div>
+        </div>
+
+        <p class="text-xs text-[#555] font-mono text-center mt-4 mb-2">Showing 12 of 71+ models.</p>
+        <p class="text-xs text-[#555] font-mono text-center mt-2">Full model pricing in <a href="docs.html#pricing" class="text-[#888] underline hover:text-[#E5E5E5] transition-colors">documentation</a>.</p>
+    </section>
+
+    <!-- SECTION 6: TRUST BAR -->
+    <section class="py-16 px-6 max-w-[1200px] mx-auto w-full border-b border-white/5 flex flex-col items-center">
+        <div class="flex flex-wrap justify-center gap-8 md:gap-16 items-center opacity-40 grayscale font-mono text-lg md:text-xl font-medium tracking-tighter">
+            <span>Microsoft</span>
+            <span>Amazon</span>
+            <span>Google</span>
+            <span>Meta</span>
+            <span>NVIDIA</span>
+            <span>Nebius</span>
+            <span>Portkey</span>
+        </div>
+        <p class="mt-8 text-[10px] text-[#444] font-mono tracking-widest uppercase text-center">Infrastructure backed by industry leaders.</p>
+    </section>
+
+    <!-- SECTION 7: QUICKSTART -->
+    <section class="py-24 px-6 max-w-[800px] mx-auto w-full">
+        <div class="text-center mb-12">
+            <h2 class="font-mono text-3xl tracking-tight text-[#E5E5E5] mb-4">Ready when you are.</h2>
+            <p class="text-[#888888] text-sm">Drop-in replacement for any existing tool.</p>
+        </div>
+
+        <div class="bg-[#111111] border border-white/5 rounded-[4px] text-left">
+            <div class="h-10 border-b border-white/5 flex items-center px-4 bg-white/[0.02]">
+                <div class="text-xs font-mono text-[#888888]">terminal</div>
+            </div>
+            <div class="p-6 font-mono text-sm overflow-x-auto leading-loose">
+<pre class="m-0"><code class="language-bash"><span class="sh-comment"># Install lightweight CLI</span>
+<span class="sh-func text-[#22C55E]">curl</span> -fsSL https://lightweight.one/install | <span class="sh-func text-[#E5E5E5]">bash</span>
+
+<span class="sh-comment mt-4 block"># Or use with any existing tool</span>
+<span class="sh-kw">export</span> OPENAI_BASE_URL=<span class="sh-str">https://api.lightweight.one/v1</span>
+<span class="sh-kw">export</span> OPENAI_API_KEY=<span class="sh-str">lw_sk_your_key_here</span>
+
+<span class="sh-comment mt-4 block"># That's it. Every model, one endpoint.</span></code></pre>
+            </div>
+        </div>
+    </section>
+
+    <!-- SECTION 8: OPEN SOURCE -->
+    <section id="github" class="py-24 px-6 border-t border-white/5 max-w-[1200px] mx-auto w-full text-center">
+        <iconify-icon icon="solar:code-square-linear" class="text-4xl text-[#888888] mb-6" stroke-width="1.5"></iconify-icon>
+        <h2 class="font-mono text-2xl tracking-tight text-[#E5E5E5] mb-6">Built in the open.</h2>
+        <p class="text-sm text-[#888888] max-w-xl mx-auto mb-8 leading-relaxed">
+            Lightweight is open source. The CLI, the SDK, the docs.<br>
+            The only thing that isn't open source is our infrastructure.
+        </p>
+        <a href="https://github.com/templarsco" target="_blank" class="inline-flex items-center gap-2 font-mono text-xs text-[#E5E5E5] border border-white/10 bg-[#111] px-4 py-2 rounded-[2px] hover:border-[#22C55E]/50 transition-colors">
+            github.com/templarsco <span class="text-[#888] ml-2 flex items-center gap-1"><iconify-icon icon="solar:star-linear"></iconify-icon> <span id="gh-stars">—</span></span>
+        </a>
+        <p class="mt-12 text-[10px] text-[#333] font-mono tracking-widest uppercase">THE REIMAGINERS OF XXI</p>
+    </section>
+
+    <!-- SECTION 9: FOOTER -->
+    <footer class="border-t border-white/5 bg-[#050505] pt-16 pb-8 px-6 mt-auto">
+        <div class="max-w-[1200px] mx-auto w-full">
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-12 mb-16">
+                <div class="col-span-2 md:col-span-1">
+                    <div class="flex items-center gap-2 mb-6">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" fill="none" class="w-5 h-5"><path d="M18.5 3L8 17h7l-1.5 12L24 15h-7l1.5-12z" stroke="#22C55E" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                        <span class="font-mono text-base tracking-tight font-medium text-[#E5E5E5]">lightweight.</span>
+                    </div>
+                </div>
+                
+                <div class="flex flex-col gap-4 font-mono text-xs">
+                    <span class="text-[#E5E5E5] mb-2 font-medium">Product</span>
+                    <a href="#pricing" class="text-[#888888] hover:text-[#E5E5E5] transition-colors">Pricing</a>
+                    <a href="docs.html" class="text-[#888888] hover:text-[#E5E5E5] transition-colors">Docs</a>
+                    <a href="docs.html" class="text-[#888888] hover:text-[#E5E5E5] transition-colors">API Reference</a>
+                    <a href="#" class="text-[#888888] hover:text-[#E5E5E5] transition-colors">Status</a>
+                </div>
+
+                <div class="flex flex-col gap-4 font-mono text-xs">
+                    <span class="text-[#E5E5E5] mb-2 font-medium">Developer</span>
+                    <a href="https://github.com/templarsco" target="_blank" class="text-[#888888] hover:text-[#E5E5E5] transition-colors">GitHub</a>
+                    <a href="docs.html" class="text-[#888888] hover:text-[#E5E5E5] transition-colors">SDK</a>
+                    <a href="docs.html" class="text-[#888888] hover:text-[#E5E5E5] transition-colors">Integration Guide</a>
+                    <a href="#" class="text-[#888888] hover:text-[#E5E5E5] transition-colors">Changelog</a>
+                </div>
+
+                <div class="flex flex-col gap-4 font-mono text-xs">
+                    <span class="text-[#E5E5E5] mb-2 font-medium">Community</span>
+                    <a href="https://github.com/templarsco" class="text-[#888888] hover:text-[#E5E5E5] transition-colors">GitHub</a>
+                    <a href="#" class="text-[#888888] hover:text-[#E5E5E5] transition-colors">X/Twitter</a>
+                </div>
+            </div>
+
+            <div class="flex flex-col md:flex-row justify-between items-center pt-8 border-t border-white/5 font-mono text-[10px] text-[#555555]">
+                <span>© 2026 Templars.</span>
+                <div class="flex gap-4 mt-4 md:mt-0">
+                    <a href="#" class="hover:text-[#888]">Privacy Policy</a>
+                    <a href="#" class="hover:text-[#888]">Terms of Service</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Fetch real-time GitHub star count
+        fetch('https://api.github.com/orgs/templarsco/repos?per_page=100')
+            .then(r => r.json())
+            .then(repos => {
+                const total = repos.reduce((sum, r) => sum + (r.stargazers_count || 0), 0);
+                const el = document.getElementById('gh-stars');
+                if (el) el.textContent = total >= 1000 ? (total / 1000).toFixed(1) + 'k' : total.toString();
+            })
+            .catch(() => {});
+    </script>
+<script>
+  fetch('https://api.lightweight.one/v1/models')
+    .then(r => r.json())
+    .then(d => {
+      const el = document.getElementById('model-count');
+      if (el && d.data) el.textContent = d.data.length + ' models';
+    })
+    .catch(() => {
+      const el = document.getElementById('model-count');
+      if (el) el.textContent = 'AI models';
+    });
+</script>
+
+
+</body></html>
